@@ -1,23 +1,25 @@
 import LeftSideBar from "@/components/leftsidebar";
 import { useState } from "react";
-
+import { Box } from "@mui/material"
+import { HomeContainer, SideBar } from "styles/body";
 
 const Home = () => {
 
     return (
-        <section className="bg-slate-200 h-full w-full flex gap-x-1 p-1 rounded">
-
+        <HomeContainer>
             {/* //! left sidebar */}
-            <div className="w-1/4 rounded p-1 bg-slate-50">
+            <SideBar>
                 <LeftSideBar />
-            </div>
+            </SideBar>
 
             {/* //! main container */}
             <div className="w-1/2 rounded p-1">2</div>
 
             {/* //! right sidebar */}
-            <div className="w-1/4 rounded p-1 bg-slate-50">3</div>
-        </section>
+            <SideBar>
+                3
+            </SideBar>
+        </HomeContainer>
     );
 }
 

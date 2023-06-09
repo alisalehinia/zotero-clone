@@ -3,6 +3,7 @@ import http from 'services/httpService'
 import LibraryAccordion from '../accordion/library';
 import FormDialog from '../formDialog/addLibrary';
 import { useLibraryContext } from '@/context/LibraryContext';
+import { Box, Typography } from "@mui/material"
 
 const LeftSideBar = () => {
     const { libraries, setLibraries } = useLibraryContext();
@@ -19,9 +20,11 @@ const LeftSideBar = () => {
 
 
     return (
-        <div>
-            <h2>left sidebar</h2>
-            <FormDialog text="New Library" fetchLibraries={fetchLibraries} />
+        <Box sx={{ p: "4px" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+                <Typography variant="h4">My Libraries</Typography>
+                <FormDialog text="New Library" fetchLibraries={fetchLibraries} />
+            </Box>
             {
                 libraries.map((library) => {
                     return <LibraryAccordion
@@ -33,7 +36,7 @@ const LeftSideBar = () => {
                         content={"library"} />
                 })
             }
-        </div>
+        </Box>
     )
 }
 

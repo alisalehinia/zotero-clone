@@ -10,9 +10,25 @@ import FormDialog from '../formDialog/addItem';
 import UpdateCollectionFormDialog from '../formDialog/updateCollection';
 import UpdateItemFormDialog from '../formDialog/updateItem';
 import { useItemContext } from '@/context/ItemContext';
+import { LeftSideAccordion, LeftSideAccordionCollection } from 'styles/body';
+import { Box } from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function CollectionAccordion({ primaryText, secondaryText, content, collectionId, fetchLibraryCollections, libraryId }) {
     const [expanded, setExpanded] = React.useState(false);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const { items, setItems } = useItemContext();
 
@@ -57,8 +73,8 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
 
 
     return (
-        <div>
-            <Accordion expanded={expanded === primaryText} onChange={handleChange(primaryText)}>
+        <Box sx={{ marginBottom: "4px" }}>
+            <LeftSideAccordionCollection expanded={expanded === primaryText} onChange={handleChange(primaryText)}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls={primaryText}
@@ -71,13 +87,45 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {content}
+                        {/* {content} */}
                         {/* <button className='m-2 bg-blue-500' onClick={() => fetchCollItems(collectionId)}>fetchItems</button> */}
-                        <button onClick={() => deleteCollection(collectionId)}>delete col</button>
-                        <UpdateCollectionFormDialog text="update col Info" collectionId={collectionId}
-                            libraryId={libraryId}
-                            fetchLibraryCollections={fetchLibraryCollections} />
-                        <FormDialog text="add item" collectionId={collectionId} fetchCollectionItems={() => fetchCollItems(collectionId)} />
+                        {/* <button onClick={() => deleteCollection(collectionId)}>delete col</button> */}
+                        <Menu
+                            id="long-menu"
+                            MenuListProps={{
+                                'aria-labelledby': 'long-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}>
+                            <MenuItem>
+                                <UpdateCollectionFormDialog text="update col Info" collectionId={collectionId}
+                                    libraryId={libraryId}
+                                    fetchLibraryCollections={fetchLibraryCollections} />
+                            </MenuItem>
+                            <MenuItem>
+                                <FormDialog text="add item" collectionId={collectionId} fetchCollectionItems={() => fetchCollItems(collectionId)} />
+                            </MenuItem>
+                        </Menu>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+                            {/* //!open menu Button */}
+                            <IconButton
+                                aria-label="more"
+                                id="long-button"
+                                aria-controls={open ? 'long-menu' : undefined}
+                                aria-expanded={open ? 'true' : undefined}
+                                aria-haspopup="true"
+                                onClick={handleClick}
+                            >
+                                <MoreVertIcon />
+                            </IconButton>
+                            {/* //! delete collection  */}
+                            <IconButton aria-label="delete">
+                                <DeleteIcon onClick={() => {
+                                    deleteCollection(collectionId);
+                                }} />
+                            </IconButton>
+                        </Box>
                         {items.length > 0 && items.map((item) => {
                             return <><div className='ml-2 border' key={item._id}>{item.name}</div>
                                 <UpdateItemFormDialog text="update item" itemId={item._id} collectionId={collectionId} fetchCollectionItems={() => fetchCollItems(collectionId)} />
@@ -86,7 +134,7 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                         })}
                     </Typography>
                 </AccordionDetails>
-            </Accordion>
-        </div>
+            </LeftSideAccordionCollection>
+        </Box>
     );
 }
