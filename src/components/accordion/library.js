@@ -19,10 +19,16 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
 
 export default function LibraryAccordion({ primaryText, secondaryText, content, libraryId, fetchLibraries }) {
   const [expanded, setExpanded] = React.useState(false);
+
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -109,7 +115,7 @@ export default function LibraryAccordion({ primaryText, secondaryText, content, 
               {/* //!delete library Button */}
               <IconButton aria-label="delete">
                 <DeleteIcon onClick={() => {
-                  deleteLibrary(libraryId);
+                  setDeleteDialogOpen(true);
                 }} />
               </IconButton>
             </Box>
@@ -127,6 +133,30 @@ export default function LibraryAccordion({ primaryText, secondaryText, content, 
           </Typography>
         </AccordionDetails>
       </LeftSideAccordionLibrary>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Are you sure you want to delete a library?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Cancel to close window
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => { setDeleteDialogOpen(false) }}>cancel</Button>
+          <Button sx={{ color: Colors.danger }} onClick={() => {
+            deleteLibrary(libraryId);
+            setDeleteDialogOpen(false);
+          }} autoFocus>
+            delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box >
   );
 }

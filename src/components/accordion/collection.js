@@ -17,6 +17,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import { Colors } from 'styles/theme';
 
 export default function CollectionAccordion({ primaryText, secondaryText, content, collectionId, fetchLibraryCollections, libraryId }) {
     const [expanded, setExpanded] = React.useState(false);
@@ -29,6 +36,8 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
 
     const { items, setItems } = useItemContext();
 
@@ -87,9 +96,6 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
-                        {/* {content} */}
-                        {/* <button className='m-2 bg-blue-500' onClick={() => fetchCollItems(collectionId)}>fetchItems</button> */}
-                        {/* <button onClick={() => deleteCollection(collectionId)}>delete col</button> */}
                         <Menu
                             id="long-menu"
                             MenuListProps={{
@@ -122,7 +128,7 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                             {/* //! delete collection  */}
                             <IconButton aria-label="delete">
                                 <DeleteIcon onClick={() => {
-                                    deleteCollection(collectionId);
+                                    setDeleteDialogOpen(true);
                                 }} />
                             </IconButton>
                         </Box>
@@ -135,6 +141,30 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                     </Typography>
                 </AccordionDetails>
             </LeftSideAccordionCollection>
+            <Dialog
+                open={deleteDialogOpen}
+                onClose={() => setDeleteDialogOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Are you sure you want to delete a collection?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Cancel to close window
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => { setDeleteDialogOpen(false) }}>cancel</Button>
+                    <Button sx={{ color: Colors.danger }} onClick={() => {
+                        deleteCollection(collectionId);
+                        setDeleteDialogOpen(false);
+                    }} autoFocus>
+                        delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
