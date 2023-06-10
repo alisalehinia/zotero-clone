@@ -1,73 +1,91 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import Head from "next/head"
-import Input from "@/components/FormInput/index"
 import Link from "next/link"
 import { useAuth, useAuthActions } from "@/context/AuthContext"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import CircularIndeterminate from "@/components/circularProgress.js"
+import { Box, InputLabel, Typography } from "@mui/material"
+import { FormContainer } from "styles/auth"
+import { Title } from "styles/body"
+import { Input, MyButton } from "styles/input"
 
-const initialValues = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: ""
-}
-const validationSchema = Yup.object({
-    name: Yup.string().required("Enter firstName and lastName").min(6, "must be at least 6 characters "),
-    email: Yup.string().required("Enter Email").email("invalid Email"),
-    password: Yup.string().required("Enter Password").min(8, "must be at least 8 characters"),
-    confirmPassword: Yup.string().oneOf([Yup.ref("password"), ""], "must be same as Entered password").required("Enter Confirmation password")
-})
+
 const RegisterForm = () => {
     const dispatch = useAuthActions();
     const { user, loading } = useAuth();
     const router = useRouter();
-    const onSubmit = (values) => {
-        const { name, email, password } = values;
-        const values2 = { name, email, password }
-        dispatch({ type: "SIGNUP", payload: values2 })
+
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [confirmPassword, setConfirmPassword] = useState();
+
+    const handleSubmit = () => {
+        dispatch({ type: "SIGNUP", payload: { name: name, email: email, password, password } })
 
     }
-    const formik = useFormik({
-        initialValues,
-        onSubmit,
-        validationSchema,
-        validateOnMount: true,
-
-    })
+    const formIsValid = () => {
+        let valid = true;
+        if (password !== confirmPassword) {
+            valid = false
+        }
+        return valid;
+    }
     useEffect(() => {
         if (user) router.push("/");
     }, [user])
 
     if (loading) return <CircularIndeterminate />
 
-    return <>
-        <Head>
-            <title>Zotero | Signup</title>
-        </Head>
-        <div className="md:max-w-md  px-4 container mx-auto">
-            <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-4">
-                <h1 className="font-black text-2xl text-blue-500 mb-4">Sign up</h1>
-                <Input label="fullName" name="name" type="text" formik={formik} />
-                <Input label="Email" name="email" type="text" formik={formik} />
-                <Input label="Password" name="password" type="password" formik={formik} />
-                <Input label="Confirm Password" name="confirmPassword" type="password" formik={formik} />
-
-                <button
-                    type="submit"
-                    // disabled={!formik.isValid}
-                    className="w-full py-2 rounded-lg bg-blue-700 text-white"
-                >Sign up</button>
-                <Link href="/login">
-                    <p className="mt-4 py-4 cursor-pointer">َAlready sign up? login</p>
-                </Link>
-            </form>
-
-        </div>
-    </>
-
+    return (
+        <Box sx={{ display: "flex", justifyContent: "center", margin: "4px" }}>
+            <Head>
+                <title>Zotero | signup</title>
+            </Head>
+            <FormContainer>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                    <Title variant="h4">Signup page</Title>
+                    <InputLabel htmlFor="name" sx={{ fontSize: "16px", margin: "5px" }}>Enter your name</InputLabel >
+                    <Input id="name" label="name" error={false} variant="outlined" value={name} onChange={(e) => {
+                        setName(e.target.value);
+                        formIsValid
+                    }} />
+                </Box>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                    <InputLabel htmlFor="email" sx={{ fontSize: "16px", margin: "5px" }}>Enter your email</InputLabel >
+                    <Input id="email" label="email" error={false} variant="outlined" value={email} onChange={(e) => {
+                        setEmail(e.target.value);
+                        formIsValid
+                    }} />
+                </Box>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                    <InputLabel htmlFor="password" sx={{ fontSize: "16px", margin: "5px" }}>Enter your password</InputLabel >
+                    <Input label="password" id="password" type="password" error={false} variant="outlined" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                        formIsValid
+                    }} />
+                </Box>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                    <InputLabel htmlFor="confirmPassword" sx={{ fontSize: "16px", margin: "5px" }}>Enter confirm password</InputLabel >
+                    <Input label="confirm Password" id="confirmPassword" type="password" error={false} variant="outlined" value={confirmPassword} onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        formIsValid
+                    }} />
+                </Box>
+                <MyButton disabled={!formIsValid} onClick={handleSubmit} variant="contained">Signup</MyButton>
+                <Box sx={{ display: "flex", alignItems: "flex-end", gap: "4px" }}>
+                    <Typography variant="caption">
+                        {" Already Have Account?"}
+                    </Typography>
+                    <Link href="/login" className="text-blue-500">
+                        Login
+                    </Link>
+                </Box>
+            </FormContainer>
+        </Box>
+    )
 }
 
 export default RegisterForm;
