@@ -60,7 +60,7 @@ const asyncActionHandlers = {
             http.delete("/users/logout").then((response) => {
                 console.log(response);
                 // console.log(data.data);
-                // window.location.href = "/";
+                window.location.href = "/";
                 console.log("log ----------------- out");
             }).catch((err) => {
                 console.log(err);
