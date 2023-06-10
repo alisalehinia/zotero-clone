@@ -10,6 +10,8 @@ export const Colors = {
     darkSecondary: "1e3a8a",
     Collection: "#737373",
     darkCollection: "#262626",
+    item: "#6b7280",
+    darkItem: "#111827",
     success: "#4CAF50",
     info: "#00a2ff",
     danger: "#FF5722",

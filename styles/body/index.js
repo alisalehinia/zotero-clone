@@ -25,3 +25,13 @@ export const LeftSideAccordionCollection = styled(Accordion)(({ theme }) => ({
 export const Title = styled(Typography)(({ theme }) => ({
     color: theme.palette.mode === "dark" ? Colors.primary : Colors.darkPrimary
 }));
+export const ItemContainer = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+    padding: "12px",
+    margin: "8px",
+    borderRadius: "10px"
+}));
+
+
+
+

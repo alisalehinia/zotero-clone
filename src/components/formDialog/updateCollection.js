@@ -45,7 +45,7 @@ export default function UpdateCollectionFormDialog({ text, collectionId, library
                 <DialogTitle>{text}</DialogTitle>
                 <DialogContent>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
-                        <InputLabel htmlFor="email" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter Library name</InputLabel >
+                        <InputLabel htmlFor="name" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter Library name</InputLabel >
                         <Input id="name" label="name" error={false} variant="outlined" value={name} onChange={(e) => {
                             setName(e.target.value);
                         }} />

@@ -10,7 +10,7 @@ import FormDialog from '../formDialog/addItem';
 import UpdateCollectionFormDialog from '../formDialog/updateCollection';
 import UpdateItemFormDialog from '../formDialog/updateItem';
 import { useItemContext } from '@/context/ItemContext';
-import { LeftSideAccordion, LeftSideAccordionCollection } from 'styles/body';
+import { ItemContainer, LeftSideAccordion, LeftSideAccordionCollection } from 'styles/body';
 import { Box } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -37,7 +37,8 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
         setAnchorEl(null);
     };
 
-    const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
+    const [deleteCollectionDialogOpen, setDeleteCollectionDialogOpen] = React.useState(false);
+    const [deleteItemDialogOpen, setDeleteItemDialogOpen] = React.useState(false);
 
     const { items, setItems } = useItemContext();
 
@@ -128,22 +129,52 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                             {/* //! delete collection  */}
                             <IconButton aria-label="delete">
                                 <DeleteIcon onClick={() => {
-                                    setDeleteDialogOpen(true);
+                                    setDeleteCollectionDialogOpen(true);
                                 }} />
                             </IconButton>
                         </Box>
                         {items.length > 0 && items.map((item) => {
-                            return <><div className='ml-2 border' key={item._id}>{item.name}</div>
+                            return <><ItemContainer key={item._id}>{item.name}</ItemContainer>
                                 <UpdateItemFormDialog text="update item" itemId={item._id} collectionId={collectionId} fetchCollectionItems={() => fetchCollItems(collectionId)} />
-                                <button onClick={() => deleteItem(item._id)}>delete item</button>
+                                <IconButton aria-label="delete">
+                                    <DeleteIcon onClick={() => {
+                                        setDeleteItemDialogOpen(true);
+                                    }} />
+                                </IconButton>
+                                {/* //! delete item dialog */}
+                                <Dialog
+                                    open={deleteItemDialogOpen}
+                                    onClose={() => setDeleteItemDialogOpen(false)}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                >
+                                    <DialogTitle id="alert-dialog-title">
+                                        {"Are you sure you want to delete an Item?"}
+                                    </DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                            Cancel to close window
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={() => { setDeleteItemDialogOpen(false) }}>cancel</Button>
+                                        <Button sx={{ color: Colors.danger }} onClick={() => {
+                                            deleteItem(item._id);
+                                            setDeleteItemDialogOpen(false);
+                                        }} autoFocus>
+                                            delete
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </>
                         })}
                     </Typography>
                 </AccordionDetails>
             </LeftSideAccordionCollection>
+            {/* //! delete collection dialog  */}
             <Dialog
-                open={deleteDialogOpen}
-                onClose={() => setDeleteDialogOpen(false)}
+                open={deleteCollectionDialogOpen}
+                onClose={() => setDeleteCollectionDialogOpen(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -156,10 +187,10 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => { setDeleteDialogOpen(false) }}>cancel</Button>
+                    <Button onClick={() => { setDeleteCollectionDialogOpen(false) }}>cancel</Button>
                     <Button sx={{ color: Colors.danger }} onClick={() => {
                         deleteCollection(collectionId);
-                        setDeleteDialogOpen(false);
+                        setDeleteCollectionDialogOpen(false);
                     }} autoFocus>
                         delete
                     </Button>
