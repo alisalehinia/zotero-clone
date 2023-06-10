@@ -24,10 +24,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import { Colors } from 'styles/theme';
+import ItemBox from '../leftsidebar/itemBox';
 
 export default function CollectionAccordion({ primaryText, secondaryText, content, collectionId, fetchLibraryCollections, libraryId }) {
     const [expanded, setExpanded] = React.useState(false);
 
+
+    //! menu data for collection
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -38,7 +41,6 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
     };
 
     const [deleteCollectionDialogOpen, setDeleteCollectionDialogOpen] = React.useState(false);
-    const [deleteItemDialogOpen, setDeleteItemDialogOpen] = React.useState(false);
 
     const { items, setItems } = useItemContext();
 
@@ -96,79 +98,49 @@ export default function CollectionAccordion({ primaryText, secondaryText, conten
                     <Typography sx={{ color: 'text.secondary' }}>{secondaryText}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        <Menu
-                            id="long-menu"
-                            MenuListProps={{
-                                'aria-labelledby': 'long-button',
-                            }}
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}>
-                            <MenuItem>
-                                <UpdateCollectionFormDialog text="update col Info" collectionId={collectionId}
-                                    libraryId={libraryId}
-                                    fetchLibraryCollections={fetchLibraryCollections} />
-                            </MenuItem>
-                            <MenuItem>
-                                <FormDialog text="add item" collectionId={collectionId} fetchCollectionItems={() => fetchCollItems(collectionId)} />
-                            </MenuItem>
-                        </Menu>
-                        <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-                            {/* //!open menu Button */}
-                            <IconButton
-                                aria-label="more"
-                                id="long-button"
-                                aria-controls={open ? 'long-menu' : undefined}
-                                aria-expanded={open ? 'true' : undefined}
-                                aria-haspopup="true"
-                                onClick={handleClick}
-                            >
-                                <MoreVertIcon />
-                            </IconButton>
-                            {/* //! delete collection  */}
-                            <IconButton aria-label="delete">
-                                <DeleteIcon onClick={() => {
-                                    setDeleteCollectionDialogOpen(true);
-                                }} />
-                            </IconButton>
-                        </Box>
-                        {items.length > 0 && items.map((item) => {
-                            return <><ItemContainer key={item._id}>{item.name}</ItemContainer>
-                                <UpdateItemFormDialog text="update item" itemId={item._id} collectionId={collectionId} fetchCollectionItems={() => fetchCollItems(collectionId)} />
-                                <IconButton aria-label="delete">
-                                    <DeleteIcon onClick={() => {
-                                        setDeleteItemDialogOpen(true);
-                                    }} />
-                                </IconButton>
-                                {/* //! delete item dialog */}
-                                <Dialog
-                                    open={deleteItemDialogOpen}
-                                    onClose={() => setDeleteItemDialogOpen(false)}
-                                    aria-labelledby="alert-dialog-title"
-                                    aria-describedby="alert-dialog-description"
-                                >
-                                    <DialogTitle id="alert-dialog-title">
-                                        {"Are you sure you want to delete an Item?"}
-                                    </DialogTitle>
-                                    <DialogContent>
-                                        <DialogContentText id="alert-dialog-description">
-                                            Cancel to close window
-                                        </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button onClick={() => { setDeleteItemDialogOpen(false) }}>cancel</Button>
-                                        <Button sx={{ color: Colors.danger }} onClick={() => {
-                                            deleteItem(item._id);
-                                            setDeleteItemDialogOpen(false);
-                                        }} autoFocus>
-                                            delete
-                                        </Button>
-                                    </DialogActions>
-                                </Dialog>
-                            </>
-                        })}
-                    </Typography>
+                    {/* //!collection menu   */}
+                    <Menu
+                        id="long-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'long-button',
+                        }}
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}>
+                        <MenuItem>
+                            <UpdateCollectionFormDialog text="update col Info" collectionId={collectionId}
+                                libraryId={libraryId}
+                                fetchLibraryCollections={fetchLibraryCollections} menuClose={handleClose} />
+
+                        </MenuItem>
+                        <MenuItem>
+                            <FormDialog text="add item" menuClose={handleClose} collectionId={collectionId} fetchCollectionItems={() => fetchCollItems(collectionId)} />
+                        </MenuItem>
+                    </Menu>
+                    <Box sx={{ display: "flex", justifyContent: "flex-end", marginBottom: "4px" }}>
+                        {/* //!open collection menu Button */}
+                        <IconButton
+                            aria-label="more"
+                            id="long-button"
+                            aria-controls={open ? 'long-menu' : undefined}
+                            aria-expanded={open ? 'true' : undefined}
+                            aria-haspopup="true"
+                            onClick={handleClick}
+                        >
+                            <MoreVertIcon />
+                        </IconButton>
+                        {/* //! delete collection  */}
+                        <IconButton aria-label="delete">
+                            <DeleteIcon onClick={() => {
+                                setDeleteCollectionDialogOpen(true);
+                            }} />
+                        </IconButton>
+                    </Box>
+                    {items.length > 0 && items.map((item) => {
+                        return <ItemBox key={item._id} item={item} collectionId={collectionId}
+                            fetchCollectionItems={fetchCollItems}
+                            deleteItem={deleteItem} />
+                    })}
                 </AccordionDetails>
             </LeftSideAccordionCollection>
             {/* //! delete collection dialog  */}

@@ -12,7 +12,7 @@ import { Box, Checkbox, InputLabel, MenuItem, Select } from '@mui/material';
 import { Input } from 'styles/input';
 
 
-export default function UpdateFormDialog({ text, libraryId, fetchLibraries }) {
+export default function UpdateFormDialog({ text, libraryId, fetchLibraries, menuClose }) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState(null);
     const [group, setGroup] = React.useState(null);
@@ -95,6 +95,7 @@ export default function UpdateFormDialog({ text, libraryId, fetchLibraries }) {
                     <Button onClick={() => {
                         changeLibraryInfo(libraryId)
                         handleClose()
+                        menuClose()
                     }}>
                         Create
                     </Button>

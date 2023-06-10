@@ -94,13 +94,13 @@ export default function LibraryAccordion({ primaryText, secondaryText, content, 
               open={open}
               onClose={handleClose}>
               <MenuItem>
-                <UpdateFormDialog text="change library info" libraryId={libraryId} fetchLibraries={fetchLibraries} />
+                <UpdateFormDialog text="change library info" libraryId={libraryId} fetchLibraries={fetchLibraries} menuClose={handleClose} />
               </MenuItem>
               <MenuItem>
-                <FormDialog text="Add new Collection" parentId={libraryId} fetchLibraryCollections={fetchLibraryCollections} />
+                <FormDialog text="Add new Collection" parentId={libraryId} fetchLibraryCollections={fetchLibraryCollections} menuClose={handleClose} />
               </MenuItem>
             </Menu>
-            <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", marginBottom: "4px" }}>
               {/* //!open menu Button */}
               <IconButton
                 aria-label="more"

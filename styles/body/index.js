@@ -29,7 +29,10 @@ export const ItemContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
     padding: "12px",
     margin: "8px",
-    borderRadius: "10px"
+    borderRadius: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
 }));
 
 

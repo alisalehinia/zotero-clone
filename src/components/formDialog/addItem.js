@@ -12,7 +12,7 @@ import { Box, InputLabel } from '@mui/material';
 import { Input } from 'styles/input';
 
 
-export default function FormDialog({ text, collectionId, fetchCollectionItems }) {
+export default function FormDialog({ text, collectionId, fetchCollectionItems, menuClose }) {
     const [open, setOpen] = React.useState(false);
 
     const [name, setName] = React.useState(null);
@@ -71,6 +71,7 @@ export default function FormDialog({ text, collectionId, fetchCollectionItems })
                     <Button onClick={() => {
                         addItem()
                         handleClose()
+                        menuClose()
                     }}>
                         Create
                     </Button>

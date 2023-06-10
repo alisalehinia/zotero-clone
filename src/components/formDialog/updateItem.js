@@ -12,7 +12,8 @@ import { Input } from 'styles/input';
 import { Box, InputLabel } from '@mui/material';
 
 
-export default function UpdateItemFormDialog({ text, itemId, fetchCollectionItems, collectionId }) {
+export default function UpdateItemFormDialog({ text, itemId, fetchCollectionItems, collectionId, menuClose }) {
+    // console.log("update Item form dialog", text, itemId, fetchCollectionItems, collectionId);    
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState(null);
     const [primaryAttachment, setPrimaryAttachment] = React.useState(null); //? the attachment which's metadata will be used
@@ -66,7 +67,7 @@ export default function UpdateItemFormDialog({ text, itemId, fetchCollectionItem
                     <Button onClick={handleClose}>Cancel</Button>
                     <Button onClick={() => {
                         changeItemInfo(itemId)
-                        handleClose()
+                        menuClose()
                     }}>
                         update
                     </Button>

@@ -12,7 +12,7 @@ import { Box, InputLabel } from '@mui/material';
 import { Input } from 'styles/input';
 
 
-export default function UpdateCollectionFormDialog({ text, collectionId, libraryId, fetchLibraryCollections }) {
+export default function UpdateCollectionFormDialog({ text, collectionId, libraryId, fetchLibraryCollections, menuClose }) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState(null);
 
@@ -57,6 +57,7 @@ export default function UpdateCollectionFormDialog({ text, collectionId, library
                     <Button onClick={() => {
                         changeCollectionInfo(collectionId)
                         handleClose()
+                        menuClose()
                     }}>
                         update
                     </Button>
