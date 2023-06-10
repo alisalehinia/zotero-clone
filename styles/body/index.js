@@ -1,5 +1,5 @@
 import { Colors } from "styles/theme";
-import { Box, styled } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 
 export const MainContainer = styled(Box)(({ theme }) => ({
@@ -22,3 +22,6 @@ export const LeftSideAccordionLibrary = styled(Accordion)(({ theme }) => ({
 export const LeftSideAccordionCollection = styled(Accordion)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkCollection : Colors.Collection,
 }))
+export const Title = styled(Typography)(({ theme }) => ({
+    color: theme.palette.mode === "dark" ? Colors.primary : Colors.darkPrimary
+}));

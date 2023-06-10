@@ -1,36 +1,41 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import Head from "next/head"
-import Input from "@/components/FormInput/index"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useAuth, useAuthActions } from "@/context/AuthContext"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import CircularIndeterminate from "@/components/circularProgress.js"
+import { FormContainer } from "styles/auth"
+import { Box, Typography, InputLabel, Button } from "@mui/material"
+import TextField from "@/common/TextField"
+import { Input } from "/styles/input"
+import { MyButton } from "styles/input"
+import { Colors } from "styles/theme"
+import { Title } from "styles/body"
 
-const initialValues = {
-    email: "",
-    password: ""
-}
-const validationSchema = Yup.object({
-    email: Yup.string().required("Enter your Email").email("Invalid Email"),
-    password: Yup.string().required("Enter Password").min(8, "must be at least 8 characters")
-})
+
 const RegisterForm = () => {
     const router = useRouter();
     const dispatch = useAuthActions();
     const { user, loading } = useAuth();
-    const onSubmit = (values) => {
-        const { email, password } = values
-        dispatch({ type: "SIGNIN", payload: values })
-    }
-    const formik = useFormik({
-        initialValues,
-        onSubmit,
-        validationSchema,
-        validateOnMount: true,
-    })
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = () => {
+        dispatch({ type: "SIGNIN", payload: { email: email, password: password } })
+    }
+    const formIsValid = () => {
+        let valid = true;
+        if (email.length === 0 || !email.includes("@")) {
+            valid = false;
+        }
+        if (password.length < 8) {
+            valid = false;
+        }
+        return valid;
+    }
     useEffect(() => {
         if (user) {
             console.log(user);
@@ -40,27 +45,37 @@ const RegisterForm = () => {
 
     if (loading) return <CircularIndeterminate />
 
-    return <>
+    return <Box sx={{ display: "flex", justifyContent: "center", margin: "4px" }}>
         <Head>
             <title>Zotero | login</title>
         </Head>
-        <div className="md:max-w-md px-4 container mx-auto mb-4">
-            <form onSubmit={formik.handleSubmit} className="flex flex-col space-y-4">
-                <h1 className="font-black text-2xl text-blue-700 mb-4">Sign in</h1>
-                <Input label="Email" name="email" type="text" formik={formik} className={""} />
-                <Input label="Password" name="password" type="password" formik={formik} />
-                <button
-                    type="submit"
-                    // disabled={!formik.isValid}
-                    className="w-full py-2 rounded-lg bg-blue-700 text-white"
-                >Sign in</button>
-                <Link href="/signup">
-                    <p className="mt-4 py-4 cursor-pointer"> Dont Have account ? Sign Un</p>
+        <FormContainer>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                <Title variant="h4">Login page</Title>
+                <InputLabel htmlFor="email" sx={{ fontSize: "16px", margin: "5px" }}>Enter your email</InputLabel >
+                <Input id="email" label="email" error={false} variant="outlined" value={email} onChange={(e) => {
+                    setEmail(e.target.value);
+                    formIsValid
+                }} />
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                <InputLabel htmlFor="password" sx={{ fontSize: "16px", margin: "5px" }}>Enter your password</InputLabel >
+                <Input label="password" id="password" type="password" error={false} variant="outlined" value={password} onChange={(e) => {
+                    setPassword(e.target.value);
+                    formIsValid
+                }} />
+            </Box>
+            <MyButton disabled={!formIsValid} onClick={handleSubmit} variant="contained">Login</MyButton>
+            <Box sx={{ display: "flex", alignItems: "flex-end", gap: "4px" }}>
+                <Typography variant="caption">
+                    {" Don't Have Account?"}
+                </Typography>
+                <Link href="/signup" className="text-blue-500">
+                    Signup
                 </Link>
-            </form>
-
-        </div>
-    </>
+            </Box>
+        </FormContainer>
+    </Box>
 
 }
 
