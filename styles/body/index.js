@@ -13,7 +13,7 @@ export const SideBar = styled(Box)(({ theme }) => ({
 export const HomeContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
     width: "100%",
-    height: "100%",
+    minHeight: "100vh",
     display: "flex",
 }))
 export const LeftSideAccordionLibrary = styled(Accordion)(({ theme }) => ({

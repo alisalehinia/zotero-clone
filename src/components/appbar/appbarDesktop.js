@@ -5,10 +5,13 @@ import { AppbarContainer, AppbarHeader, DarkModeSwitch, MyList } from "../../../
 import Actions from "./actions";
 import Link from "next/link";
 import Button from '@mui/material/Button';
+import { useAuth } from "@/context/AuthContext";
 
 export default function AppbarDesktop({ matches, toggleTheme }) {
 
     const { setShowSearchBox } = useUIContext();
+
+    const { user } = useAuth();
 
     return (
         <AppbarContainer>
@@ -19,12 +22,12 @@ export default function AppbarDesktop({ matches, toggleTheme }) {
                 <Link href="/">
                     <ListItemText primary="Home" sx={{ cursor: "pointer" }} />
                 </Link>
-                <Link href="/login">
+                {!user && <> <Link href="/login">
                     <ListItemText sx={{ cursor: "pointer" }} primary="Login" />
                 </Link>
-                <Link href="/signup">
-                    <ListItemText sx={{ cursor: "pointer" }} primary="Sign up" />
-                </Link>
+                    <Link href="/signup">
+                        <ListItemText sx={{ cursor: "pointer" }} primary="Sign up" />
+                    </Link> </>}
                 <ListItemText sx={{ cursor: "pointer" }} primary="Groups" />
                 <ListItemButton>
                     <ListItemIcon>
