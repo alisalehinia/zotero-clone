@@ -8,6 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import http from 'services/httpService';
 import { toast } from 'react-hot-toast';
+import { Box, InputLabel } from '@mui/material';
+import { Input } from 'styles/input';
 
 
 export default function FormDialog({ text, parentId, fetchLibraryCollections }) {
@@ -46,11 +48,12 @@ export default function FormDialog({ text, parentId, fetchLibraryCollections }) 
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>{text}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        <h4>Enter Info</h4>
-                    </DialogContentText>
-                    <input className='textField__input m-1' placeholder='collection name' type="text" value={name} onChange={(e) => setName(e.target.value)} />
-
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                        <InputLabel htmlFor="email" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter Collection name</InputLabel >
+                        <Input id="name" label="name" error={false} variant="outlined" value={name} onChange={(e) => {
+                            setName(e.target.value);
+                        }} />
+                    </Box>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
