@@ -7,6 +7,7 @@ import Link from "next/link";
 import Button from '@mui/material/Button';
 import { useAuth } from "@/context/AuthContext";
 
+
 export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
 
     const { setShowSearchBox } = useUIContext();

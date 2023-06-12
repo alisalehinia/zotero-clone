@@ -2,7 +2,7 @@ import "../../styles/globals.css"
 import { Toaster } from 'react-hot-toast';
 import AuthProvider from "@/context/AuthContext";
 import { Container, ThemeProvider } from "@mui/material";
-// import theme from "styles/theme";
+import { appWithTranslation } from "next-i18next";
 import Appbar from "@/components/appbar";
 import { UIProvider } from "@/context/ui"
 import AppDrawer from "@/components/drawer";
@@ -157,4 +157,4 @@ function MyApp({ Component, pageProps }) {
   </AuthProvider>
 }
 
-export default MyApp
+export default appWithTranslation(MyApp)

@@ -14,6 +14,8 @@ import { MyButton } from "styles/input"
 import { Colors } from "styles/theme"
 import { Title } from "styles/body"
 
+import { useTranslation } from "next-i18next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 const RegisterForm = () => {
     const router = useRouter();
@@ -22,6 +24,10 @@ const RegisterForm = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const { locale } = useRouter()
+    const { t: translate } = useTranslation('login')
+
 
     const handleSubmit = () => {
         dispatch({ type: "SIGNIN", payload: { email: email, password: password } })
@@ -51,7 +57,8 @@ const RegisterForm = () => {
         </Head>
         <FormContainer>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
-                <Title variant="h4">Login page</Title>
+                {/* <Title variant="h4">Login page</Title> */}
+                <Title variant="h4">{translate('login-title')}</Title>
                 <InputLabel htmlFor="email" sx={{ fontSize: "16px", margin: "5px" }}>Enter your email</InputLabel >
                 <Input id="email" label="email" error={false} variant="outlined" value={email} onChange={(e) => {
                     setEmail(e.target.value);
@@ -80,3 +87,12 @@ const RegisterForm = () => {
 }
 
 export default RegisterForm;
+
+export async function getStaticProps({ locale }) {
+
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ['login']))
+        }
+    }
+}
