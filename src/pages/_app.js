@@ -120,11 +120,6 @@ const darkTheme = createTheme({
   }
 })
 
-function getActiveTheme(themeMode) {
-  return themeMode === 'light' ? lightTheme : darkTheme;
-}
-
-
 function MyApp({ Component, pageProps }) {
 
   const [darkMode, setDarkMode] = useState();

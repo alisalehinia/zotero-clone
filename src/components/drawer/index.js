@@ -1,10 +1,11 @@
 import { CloseRounded } from "@mui/icons-material";
-import { Button, Divider, Drawer, List, ListItemButton, ListItemText, styled } from "@mui/material";
+import { Button, Divider, Drawer, List, ListItemButton, ListItemText, styled, useTheme } from "@mui/material";
 import { lighten } from "polished";
 import { useUIContext } from "../../context/ui";
 import { DarkModeSwitch, DrawerCloseButton } from "../../../styles/appbar";
 import { Colors } from "../../../styles/theme";
 import Link from "next/link";
+import { MainDrawer } from "styles/drawer.js";
 
 export const MiddleDivider = styled((props) => (
     <Divider variant="middle" {...props} />
@@ -13,6 +14,7 @@ export default function AppDrawer({ darkMode, toggleTheme }) {
 
     const { drawerOpen, setDrawerOpen } = useUIContext();
 
+
     return (
         <>
             {drawerOpen
@@ -20,7 +22,7 @@ export default function AppDrawer({ darkMode, toggleTheme }) {
                     onClick={() => setDrawerOpen(false)} >
                     <CloseRounded sx={{ fontSize: "2.5rem", color: lighten(0.09, Colors.secondary) }} />
                 </DrawerCloseButton>}
-            <Drawer open={drawerOpen}>
+            <MainDrawer open={drawerOpen}>
                 <List>
                     <ListItemButton>
                         <ListItemText>
@@ -54,7 +56,7 @@ export default function AppDrawer({ darkMode, toggleTheme }) {
                     </ListItemButton>
                     <MiddleDivider />
                 </List>
-            </Drawer>
+            </MainDrawer>
         </>
 
     )
