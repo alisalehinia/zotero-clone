@@ -7,7 +7,7 @@ import Link from "next/link";
 import Button from '@mui/material/Button';
 import { useAuth } from "@/context/AuthContext";
 
-export default function AppbarDesktop({ matches, toggleTheme }) {
+export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
 
     const { setShowSearchBox } = useUIContext();
 
@@ -35,7 +35,7 @@ export default function AppbarDesktop({ matches, toggleTheme }) {
                     </ListItemIcon>
                 </ListItemButton>
             </MyList>
-            <DarkModeSwitch sx={{ m: 1 }} onChange={toggleTheme} />
+            <DarkModeSwitch checked={darkMode} sx={{ m: 1 }} onChange={toggleTheme} value={darkMode} />
             <Actions matches={matches} />
         </AppbarContainer>
     )

@@ -126,29 +126,31 @@ function getActiveTheme(themeMode) {
 
 
 function MyApp({ Component, pageProps }) {
-  const [activeTheme, setActiveTheme] = useState(lightTheme);
-  const [selectedTheme, setSelectedTheme] = useState('light');
+
+  const [darkMode, setDarkMode] = useState();
+
+  useEffect(() => {
+    const storedDarkMode = localStorage.getItem("darkTheme");
+    const parsedDarkMode = storedDarkMode === "true"; // Convert the string to a boolean
+    setDarkMode(parsedDarkMode);
+  }, []);
 
   const toggleTheme = () => {
-    const desiredTheme = selectedTheme === 'light' ? 'dark' : 'light';
-
-    setSelectedTheme(desiredTheme);
-  };
-  useEffect(() => {
-    setActiveTheme(getActiveTheme(selectedTheme))
-  }, [selectedTheme]);
+    localStorage.setItem("darkTheme", !darkMode);
+    setDarkMode(!darkMode);
+  }
 
   return <AuthProvider>
     <LibraryProvider>
       <CollectionProvider>
         <ItemProvider>
-          <ThemeProvider theme={activeTheme}>
+          <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
             <CssBaseline />
             <MainContainer>
               <UIProvider>
-                <Appbar toggleTheme={toggleTheme} />
+                <Appbar darkMode={darkMode} toggleTheme={toggleTheme} />
                 <Component {...pageProps} />
-                <AppDrawer toggleTheme={toggleTheme} />
+                <AppDrawer darkMode={darkMode} toggleTheme={toggleTheme} />
                 <SearchBox />
                 <Toaster />
               </UIProvider>

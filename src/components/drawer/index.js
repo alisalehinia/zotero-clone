@@ -9,7 +9,7 @@ import Link from "next/link";
 export const MiddleDivider = styled((props) => (
     <Divider variant="middle" {...props} />
 ))``; // => can add css between backticks
-export default function AppDrawer({ toggleTheme }) {
+export default function AppDrawer({ darkMode, toggleTheme }) {
 
     const { drawerOpen, setDrawerOpen } = useUIContext();
 
@@ -47,7 +47,10 @@ export default function AppDrawer({ toggleTheme }) {
                     </ListItemButton>
                     <MiddleDivider />
                     <ListItemButton>
-                        <DarkModeSwitch sx={{ m: 1 }} onChange={toggleTheme} />
+                        <DarkModeSwitch checked={darkMode} sx={{ m: 1 }} onChange={() => {
+                            toggleTheme()
+                            setDrawerOpen(false)
+                        }} value={darkMode} />
                     </ListItemButton>
                     <MiddleDivider />
                 </List>
