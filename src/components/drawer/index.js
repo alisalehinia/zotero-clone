@@ -71,8 +71,6 @@ export default function AppDrawer({ darkMode, toggleTheme }) {
                         <MiddleDivider />
                     </>
                     }
-
-
                     <ListItemButton>
                         <DarkModeSwitch checked={darkMode} sx={{ m: 1 }} onChange={() => {
                             toggleTheme()
