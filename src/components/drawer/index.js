@@ -1,5 +1,5 @@
 import { CloseRounded } from "@mui/icons-material";
-import { Button, Divider, Drawer, List, ListItemButton, ListItemText, MenuItem, Select, styled, useTheme } from "@mui/material";
+import { Box, Button, Divider, Drawer, List, ListItemButton, ListItemText, MenuItem, Select, Typography, styled, useTheme } from "@mui/material";
 import { lighten } from "polished";
 import { useUIContext } from "../../context/ui";
 import { DarkModeSwitch, DrawerCloseButton } from "../../../styles/appbar";
@@ -39,6 +39,14 @@ export default function AppDrawer({ darkMode, toggleTheme }) {
                 </DrawerCloseButton>}
             <MainDrawer open={drawerOpen}>
                 <List>
+                    {user && <>
+                        <Box sx={{ display: "flex", justifyContent: "space-start", alignItems: "center" }}>
+                            <UserAvatar />
+                            <Typography variant="h6" sx={{ ml: 1 }}>{user.name}</Typography>
+                        </Box>
+                        <MiddleDivider />
+                    </>
+                    }
                     <ListItemButton>
                         <ListItemText>
                             Home
@@ -63,20 +71,10 @@ export default function AppDrawer({ darkMode, toggleTheme }) {
                         </ListItemText>
                     </ListItemButton>
                     <MiddleDivider />
-
-                    {user && <>
-                        <ListItemButton>
-                            <UserAvatar />
-                        </ListItemButton>
-                        <MiddleDivider />
-                    </>
-                    }
-                    <ListItemButton>
-                        <DarkModeSwitch checked={darkMode} sx={{ m: 1 }} onChange={() => {
-                            toggleTheme()
-                            setDrawerOpen(false)
-                        }} value={darkMode} />
-                    </ListItemButton>
+                    <DarkModeSwitch checked={darkMode} sx={{ m: 1 }} onChange={() => {
+                        toggleTheme()
+                        setDrawerOpen(false)
+                    }} value={darkMode} />
                     <MiddleDivider />
                     <ListItemButton>
                         <Select

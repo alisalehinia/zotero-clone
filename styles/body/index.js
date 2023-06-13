@@ -8,7 +8,12 @@ export const MainContainer = styled(Box)(({ theme }) => ({
 }))
 export const SideBar = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
-    width: "25%"
+    width: "25%",
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+        width: "25%",
+        display: "block"
+    }
 }))
 export const HomeContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,

@@ -5,6 +5,7 @@ import { HomeContainer, SideBar } from "styles/body";
 import http from "services/httpService";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import FileStructureMobile from "@/components/formDialog/fileStractureMobile";
 
 const Home = () => {
     const { locale, locales, push } = useRouter();
@@ -17,7 +18,7 @@ const Home = () => {
 
             {/* //! main container */}
             <div className="w-1/2 rounded p-1">
-                2
+                <FileStructureMobile />
             </div>
             {/* //! right sidebar */}
             <SideBar>

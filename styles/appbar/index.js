@@ -10,7 +10,8 @@ export const AppbarContainer = styled(Box)(({ theme }) => ({
     justifyContent: "center",
     alignItems: "center",
     padding: '2px 8px',
-    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary
+    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+    marginTop: 0
 }))
 
 //header
