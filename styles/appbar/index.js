@@ -35,15 +35,17 @@ export const ActionIconsContainerDesktop = styled(Box)(() => ({
     flexGrow: 0
 }))
 export const ActionIconsContainerMobile = styled(Box)(() => ({
-    display: "flex",
-    background: Colors.shaft,
-    position: "fixed",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    alignItems: "center",
-    zIndex: 99,
-    borderTop: `1px solid ${Colors.border}`
+    flexGrow: 0,
+    display: "none"
+    // display: "flex",
+    // background: Colors.shaft,
+    // position: "fixed",
+    // bottom: 0,
+    // left: 0,
+    // width: "100%",
+    // alignItems: "center",
+    // zIndex: 99,
+    // borderTop: `1px solid ${Colors.border}`
 }))
 
 export const DrawerCloseButton = styled(IconButton)(() => ({

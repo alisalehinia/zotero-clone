@@ -1,9 +1,11 @@
 import { FavoriteRounded, Logout, PersonAdd, PersonRounded, Settings, ShoppingCartRounded } from "@mui/icons-material"
-import { Avatar, Button, Divider, IconButton, ListItemButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
+import { Avatar, Button, Divider, IconButton, ListItemButton, ListItemIcon, Menu, MenuItem, Select } from "@mui/material"
 import { ActionIconsContainerDesktop, ActionIconsContainerMobile, MyList } from "../../../styles/appbar"
 import { Colors } from "../../../styles/theme/index";
 import { useState } from "react";
 import { useAuth, useAuthActions } from "@/context/AuthContext";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Actions({ matches }) {
     const Component = matches ? ActionIconsContainerMobile : ActionIconsContainerDesktop;
@@ -21,18 +23,22 @@ export default function Actions({ matches }) {
         setAnchorEl(null);
     };
 
+    //? language setting
+    const { locale, locales, push } = useRouter();
+    const [selectedLanguage, setSelectedLanguage] = useState(locale);
+    const handleLanguageChange = (event) => {
+        const selectedLanguage = event.target.value;
+        setSelectedLanguage(selectedLanguage);
+        push("/", "/", { locale: selectedLanguage });
+    };
+
+
     return (
         <Component>
             <MyList type="row">
                 <ListItemButton sx={{ justifyContent: "center" }}>
                     <ListItemIcon sx={{ display: "flex", justifyContent: "center", color: matches && Colors.secondary }}>
                         <ShoppingCartRounded />
-                    </ListItemIcon>
-                </ListItemButton>
-                <Divider orientation="vertical" flexItem />
-                <ListItemButton sx={{ justifyContent: "center" }}>
-                    <ListItemIcon sx={{ display: "flex", justifyContent: "center", color: matches && Colors.secondary }}>
-                        <FavoriteRounded />
                     </ListItemIcon>
                 </ListItemButton>
                 {user && <>
@@ -52,6 +58,26 @@ export default function Actions({ matches }) {
                         </ListItemIcon>
                     </ListItemButton>
                     <Divider orientation="vertical" flexItem /></>}
+                <Divider orientation="vertical" flexItem />
+                <ListItemButton sx={{ justifyContent: "center" }}>
+                    <ListItemIcon sx={{ display: "flex", justifyContent: "center", color: matches && Colors.secondary }}>
+                        <ListItemButton sx={{ justifyContent: "center" }}>
+                            <ListItemIcon sx={{ display: "flex", justifyContent: "center", color: matches && Colors.secondary }}>
+                                <Select
+                                    value={selectedLanguage}
+                                    onChange={handleLanguageChange}
+                                    variant="outlined"
+                                    size="small"
+                                >
+                                    {locales.map((l) => (
+                                        <MenuItem key={l} value={l}>{l}</MenuItem>
+                                    ))}
+                                </Select>
+                            </ListItemIcon>
+                        </ListItemButton>
+
+                    </ListItemIcon>
+                </ListItemButton>
             </MyList>
             <Menu
                 anchorEl={anchorEl}

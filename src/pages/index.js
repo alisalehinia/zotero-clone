@@ -17,14 +17,7 @@ const Home = () => {
 
             {/* //! main container */}
             <div className="w-1/2 rounded p-1">
-                <p>{locale}</p>
-                {locales.map(l => (
-                    <p className="bg-red-300" key={l}>
-                        <Link href="/" locale={l}>
-                            {l}
-                        </Link>
-                    </p>
-                ))}
+                2
             </div>
             {/* //! right sidebar */}
             <SideBar>
