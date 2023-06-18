@@ -36,9 +36,7 @@ export default function FormDialog({ text, fetchLibraries }) {
     }
     const fetchUserGroups = () => {
         http.get("/groups").then((res) => {
-            console.log(res);
             setAllUserGroups(res.data.data);
-            console.log(allUserGroups);
         }).catch((err) => console.log(err))
     }
     const handleClickOpen = () => {
@@ -50,7 +48,6 @@ export default function FormDialog({ text, fetchLibraries }) {
         setOpen(false);
     };
 
-    console.log("===============================", name, group, privateGroup);
     return (
         <div>
             <Button variant="outlined" onClick={handleClickOpen}>

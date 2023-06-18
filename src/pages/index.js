@@ -9,6 +9,12 @@ import FileStructureMobile from "@/components/formDialog/fileStractureMobile";
 
 const Home = () => {
     const { locale, locales, push } = useRouter();
+
+    const addAttachment = () => {
+        http.get("/attachmentTypes").then((res) => {
+            console.log(res.data.data);
+        }).catch((err) => console.log(err));
+    }
     return (
         <HomeContainer>
             {/* //! left sidebar */}
@@ -19,6 +25,7 @@ const Home = () => {
             {/* //! main container */}
             <div className="w-1/2 rounded p-1">
                 <FileStructureMobile />
+                <button onClick={addAttachment} >add attachment type</button>
             </div>
             {/* //! right sidebar */}
             <SideBar>

@@ -5,6 +5,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateItemFormDialog from '../formDialog/updateItem';
 import { Colors } from 'styles/theme';
+import AddAttachment from '../formDialog/addAttachment';
 
 const ItemBox = ({ item, collectionId, deleteItem, fetchCollectionItems }) => {
     console.log(open);
@@ -37,10 +38,10 @@ const ItemBox = ({ item, collectionId, deleteItem, fetchCollectionItems }) => {
                 >
 
                     <MenuItem>
-                        <UpdateItemFormDialog text="update item ..." itemId={item.id} menuClose={handleClose} fetchCollectionItems={fetchCollectionItems} collectionId={collectionId} />
+                        <UpdateItemFormDialog text="update item" itemId={item.id} menuClose={handleClose} fetchCollectionItems={fetchCollectionItems} collectionId={collectionId} />
                     </MenuItem>
                     <MenuItem>
-                        add attachment
+                        <AddAttachment text="add attachment" itemId={item.id} />
                     </MenuItem>
                     <MenuItem>
                         add note
