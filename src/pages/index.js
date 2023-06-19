@@ -1,20 +1,18 @@
 import LeftSideBar from "@/components/leftsidebar";
 import { useState } from "react";
 import { Box } from "@mui/material"
-import { HomeContainer, SideBar } from "styles/body";
+import { HomeContainer, MainContainer, MiddleContainer, SideBar } from "styles/body";
 import http from "services/httpService";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import FileStructureMobile from "@/components/formDialog/fileStractureMobile";
+import { useItemContext } from "@/context/ItemContext";
+import { useAttachmentContext } from "@/context/AttachmentContext";
+import MiddleContainerComponent from "@/components/mainContainer";
 
 const Home = () => {
     const { locale, locales, push } = useRouter();
-
-    const addAttachment = () => {
-        http.get("/attachmentTypes").then((res) => {
-            console.log(res.data.data);
-        }).catch((err) => console.log(err));
-    }
+    const { attachments, setAttachments } = useAttachmentContext();
     return (
         <HomeContainer>
             {/* //! left sidebar */}
@@ -22,11 +20,11 @@ const Home = () => {
                 <LeftSideBar />
             </SideBar>
 
-            {/* //! main container */}
-            <div className="w-1/2 rounded p-1">
+            {/* //! middle container */}
+            <MiddleContainer>
                 <FileStructureMobile />
-                <button onClick={addAttachment} >add attachment type</button>
-            </div>
+                <MiddleContainerComponent />
+            </MiddleContainer>
             {/* //! right sidebar */}
             <SideBar>
                 3

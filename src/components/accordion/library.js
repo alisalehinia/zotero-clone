@@ -50,7 +50,7 @@ export default function LibraryAccordion({ primaryText, secondaryText, content, 
   const fetchLibraryCollections = async (libraryId) => {
     try {
       const res = await http.get(`/libraries/${libraryId}/collections`);
-      console.log("fetch collections ", res.data.data);
+      // console.log("fetch collections ", res.data.data);
       setCollections(res.data.data)
     } catch (error) {
       console.log("fetch collections ", error);

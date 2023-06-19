@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { lighten } from "polished";
 import { Colors } from "styles/theme";
 import { MainContainer } from "styles/body";
+import { AttachmentProvider } from "@/context/AttachmentContext";
 
 const lightTheme = createTheme({
   palette: {
@@ -139,18 +140,20 @@ function MyApp({ Component, pageProps }) {
     <LibraryProvider>
       <CollectionProvider>
         <ItemProvider>
-          <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-            <CssBaseline />
-            <MainContainer>
-              <UIProvider>
-                <Appbar darkMode={darkMode} toggleTheme={toggleTheme} />
-                <Component {...pageProps} />
-                <AppDrawer darkMode={darkMode} toggleTheme={toggleTheme} />
-                <SearchBox />
-                <Toaster />
-              </UIProvider>
-            </MainContainer>
-          </ThemeProvider>
+          <AttachmentProvider>
+            <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+              <CssBaseline />
+              <MainContainer>
+                <UIProvider>
+                  <Appbar darkMode={darkMode} toggleTheme={toggleTheme} />
+                  <Component {...pageProps} />
+                  <AppDrawer darkMode={darkMode} toggleTheme={toggleTheme} />
+                  <SearchBox />
+                  <Toaster />
+                </UIProvider>
+              </MainContainer>
+            </ThemeProvider>
+          </AttachmentProvider>
         </ItemProvider>
       </CollectionProvider>
     </LibraryProvider>

@@ -5,6 +5,8 @@ export const Colors = {
     primary: "#e2e8f0",
     darkPrimary: "#1e293b",
     gray: "#d1d5db",
+    attachmentOdd: "#94a3b8",
+    attachmentEven: "#64748b",
     darkGray: "#374151",
     secondary: "#2563eb",
     darkSecondary: "1e3a8a",

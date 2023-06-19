@@ -1,11 +1,13 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Menu, MenuItem } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ItemContainer } from 'styles/body'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateItemFormDialog from '../formDialog/updateItem';
 import { Colors } from 'styles/theme';
 import AddAttachment from '../formDialog/addAttachment';
+import http from 'services/httpService';
+import { useAttachmentContext } from '@/context/AttachmentContext';
 
 const ItemBox = ({ item, collectionId, deleteItem, fetchCollectionItems }) => {
     console.log(open);
@@ -20,11 +22,24 @@ const ItemBox = ({ item, collectionId, deleteItem, fetchCollectionItems }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    //! /////////////////////////
 
+    // ! fetch all items's attachments 
+    const { setAttachments } = useAttachmentContext();
+
+    const fetchItemAttachment = () => {
+        http.get(`/items/${item.id}/attachments`).then((res) => {
+            // console.log(res.data.data);
+            setAttachments(res.data.data);
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+    //! /////////////////////////
 
     return (
         <>
-            <ItemContainer>
+            <ItemContainer onClick={() => { fetchItemAttachment() }}>
                 <Box>{item.name}</Box>
                 {/* //!menu */}
                 <Menu
@@ -65,6 +80,7 @@ const ItemBox = ({ item, collectionId, deleteItem, fetchCollectionItems }) => {
                         }} />
                     </IconButton>
                 </Box>
+                {/* <Button >attachments</Button> */}
             </ItemContainer>
             {/* //! delete dialog */}
             <Dialog

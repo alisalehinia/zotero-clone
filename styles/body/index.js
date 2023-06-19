@@ -37,9 +37,35 @@ export const ItemContainer = styled(Box)(({ theme }) => ({
     borderRadius: "10px",
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    cursor: "pointer",
 }));
 
+export const AttachmentContainer = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+    [theme.breakpoints.down("md")]: {
+        width: "100%"
+    },
+    padding: "4px",
+    margin: "4px",
+    borderRadius: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    cursor: "pointer",
+}));
+export const MiddleContainer = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+    [theme.breakpoints.down("md")]: {
+        width: "100%"
+    },
+    padding: "6px",
+    margin: "6px",
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "column",
+    width: "50%"
+}));
 
 
 
