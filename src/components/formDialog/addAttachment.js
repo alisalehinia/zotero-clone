@@ -11,6 +11,7 @@ import { useState } from 'react';
 import http from 'services/httpService';
 import { Input } from 'styles/input';
 import { toast } from 'react-hot-toast';
+import { useAttachmentContext } from '@/context/AttachmentContext';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -35,7 +36,7 @@ export default function AddAttachment({ text, itemId }) {
     const [primary, setPrimary] = useState(false);
     //!--------------------
 
-    //! All attachments
+    //! All attachment's types
     const [allAttachmentTypes, setAllAttachmentTypes] = useState();
 
     const fetchAttachmentTypes = () => {
@@ -48,6 +49,7 @@ export default function AddAttachment({ text, itemId }) {
     }, []);
     // ! -------------------------
 
+    const { setAttachments } = useAttachmentContext();
     const submitAttachment = () => {
         // Create a FormData object to send the form data
         const formData = new FormData();
@@ -61,7 +63,12 @@ export default function AddAttachment({ text, itemId }) {
         // Make a POST request to your API endpoint
         http.post(`/items/${itemId}/attachments`, formData)
             .then((res) => {
-                toast.success("attachment added")
+                toast.success("attachment added");
+                http.get(`/items/${itemId}/attachments`).then((res) => {
+                    setAttachments(res.data.data)
+                }).catch((err) => {
+                    console.log(err);
+                })
                 console.log(res);
             })
             .catch((err) => {

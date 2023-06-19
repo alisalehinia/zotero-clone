@@ -1,6 +1,7 @@
 import { Colors } from "styles/theme";
 import { Box, Typography, styled } from "@mui/material";
 import Accordion from '@mui/material/Accordion';
+import { darken, lighten } from "polished";
 
 export const MainContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
@@ -43,16 +44,21 @@ export const ItemContainer = styled(Box)(({ theme }) => ({
 
 export const AttachmentContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+
     [theme.breakpoints.down("md")]: {
         width: "100%"
     },
-    padding: "4px",
+    padding: "5px",
     margin: "4px",
     borderRadius: "10px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     cursor: "pointer",
+    '&:hover': {
+        backgroundColor: theme.palette.mode === 'dark' ? lighten(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary) :
+            darken(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary)
+    },
 }));
 export const MiddleContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
