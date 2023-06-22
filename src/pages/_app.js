@@ -18,6 +18,9 @@ import { lighten } from "polished";
 import { Colors } from "styles/theme";
 import { MainContainer } from "styles/body";
 import { AttachmentProvider } from "@/context/AttachmentContext";
+import { Provider } from "react-redux";
+
+import store from "../../store/index"
 
 const lightTheme = createTheme({
   palette: {
@@ -137,26 +140,28 @@ function MyApp({ Component, pageProps }) {
   }
 
   return <AuthProvider>
-    <LibraryProvider>
-      <CollectionProvider>
-        <ItemProvider>
-          <AttachmentProvider>
-            <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-              <CssBaseline />
-              <MainContainer>
-                <UIProvider>
-                  <Appbar darkMode={darkMode} toggleTheme={toggleTheme} />
-                  <Component {...pageProps} />
-                  <AppDrawer darkMode={darkMode} toggleTheme={toggleTheme} />
-                  <SearchBox />
-                  <Toaster />
-                </UIProvider>
-              </MainContainer>
-            </ThemeProvider>
-          </AttachmentProvider>
-        </ItemProvider>
-      </CollectionProvider>
-    </LibraryProvider>
+    <Provider store={store}>
+      <LibraryProvider>
+        <CollectionProvider>
+          <ItemProvider>
+            <AttachmentProvider>
+              <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+                <CssBaseline />
+                <MainContainer>
+                  <UIProvider>
+                    <Appbar darkMode={darkMode} toggleTheme={toggleTheme} />
+                    <Component {...pageProps} />
+                    <AppDrawer darkMode={darkMode} toggleTheme={toggleTheme} />
+                    <SearchBox />
+                    <Toaster />
+                  </UIProvider>
+                </MainContainer>
+              </ThemeProvider>
+            </AttachmentProvider>
+          </ItemProvider>
+        </CollectionProvider>
+      </LibraryProvider>
+    </Provider>
   </AuthProvider>
 }
 

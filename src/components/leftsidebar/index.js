@@ -5,7 +5,7 @@ import FormDialog from '../formDialog/addLibrary';
 import { useLibraryContext } from '@/context/LibraryContext';
 import { Box, Typography } from "@mui/material"
 
-const LeftSideBar = () => {
+const LeftSideBarComponent = () => {
     const { libraries, setLibraries } = useLibraryContext();
 
     const fetchLibraries = async () => {
@@ -20,7 +20,7 @@ const LeftSideBar = () => {
 
 
     return (
-        <Box sx={{ p: "4px" }}>
+        <Box sx={{ p: "2px" }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
                 <Typography variant="h4">My Libraries</Typography>
                 <FormDialog text="New Library" fetchLibraries={fetchLibraries} />
@@ -40,4 +40,4 @@ const LeftSideBar = () => {
     )
 }
 
-export default LeftSideBar
+export default LeftSideBarComponent
