@@ -29,7 +29,6 @@ const ItemTree = ({ collectionId }) => {
 
     const func = (id) => {
         http.get(`/items/${id}/attachments`).then((res) => {
-            console.log("qqqqqqq");
             setAttachments(res.data.data);
         }).catch((err) => console.log(err))
     }

@@ -9,10 +9,10 @@ const MiddleContainerComponent = () => {
         <>
             {
                 attachments.map((attachment, index) => {
-                    const isOdd = (index + 1) % 2 === 1;
-                    const backgroundColor = isOdd ? '#94a3b8' : '#64748b';
-
-                    return <AttachmentContainer key={attachment._id} sx={{ backgroundColor: backgroundColor }}>
+                    // const isOdd = (index + 1) % 2 === 1;
+                    // const backgroundColor = isOdd ? '#94a3b8' : '#64748b';
+                    // sx={{ backgroundColor: backgroundColor }}
+                    return <AttachmentContainer key={attachment._id} >
                         <Box>{attachment.name}</Box>
                         <Box>{attachment._id}</Box>
                     </AttachmentContainer>

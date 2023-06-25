@@ -21,6 +21,19 @@ const librarySlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        updateLibraryById(state, action) {
+            const { id, updatedData } = action.payload;
+
+            const libraryToUpdate = state.libraries.find(library => library.id === id);
+            if (libraryToUpdate) {
+                // Update the library with the provided ID
+                Object.assign(libraryToUpdate, updatedData);
+            }
+        },
+        deleteLibraryById(state, action) {
+            const id = action.payload;
+            state.libraries = state.libraries.filter(library => library.id !== id);
+        },
     },
 });
 

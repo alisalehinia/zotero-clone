@@ -54,25 +54,26 @@ export const ItemContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const AttachmentContainer = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+    // backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
 
     [theme.breakpoints.down("md")]: {
         width: "100%"
     },
     padding: "5px",
     margin: "4px",
-    borderRadius: "10px",
+    borderRadius: "5px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     cursor: "pointer",
-    '&:hover': {
-        backgroundColor: theme.palette.mode === 'dark' ? lighten(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary) :
-            darken(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary)
-    },
+    border: `1px solid ${theme.palette.mode === "dark" ? Colors.primary : Colors.darkPrimary}`
+    // '&:hover': {
+    //     backgroundColor: theme.palette.mode === 'dark' ? lighten(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary) :
+    //         darken(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary)
+    // },
 }));
 export const MiddleContainer = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+    // backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
     [theme.breakpoints.down("md")]: {
         width: "100%"
     },
@@ -81,7 +82,8 @@ export const MiddleContainer = styled(Box)(({ theme }) => ({
     borderRadius: "10px",
     display: "flex",
     flexDirection: "column",
-    width: "50%"
+    width: "50%",
+
 }));
 
 
