@@ -5,7 +5,6 @@ import { AttachmentContainer } from 'styles/body'
 
 const MiddleContainerComponent = () => {
     const { attachments } = useAttachmentContext();
-    console.log(attachments);
     return (
         <>
             {

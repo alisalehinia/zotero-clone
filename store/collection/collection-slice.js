@@ -1,29 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const librarySlice = createSlice({
-    name: 'library',
+const collection = createSlice({
+    name: 'collection',
     initialState: {
-        libraries: [],
+        library: {},
         loading: false,
         error: null,
     },
     reducers: {
-        fetchUserLibrariesStart(state) {
+        fetchLibraryCollectionStart(state) {
             state.loading = true;
             state.error = null;
         },
-        fetchUserLibrariesSuccess(state, action) {
-            state.libraries = action.payload;
+        fetchLibraryCollectionSuccess(state, action) {
+            state.library[action.payload.libId] = action.payload.collections;
             state.loading = false;
             state.error = null;
         },
-        fetchUserLibrariesFailure(state, action) {
+        fetchLibraryCollectionFailure(state, action) {
             state.loading = false;
             state.error = action.payload;
         },
     },
 });
 
-export const libraryActions = librarySlice.actions;
+export const collectionActions = collection.actions;
 
-export default librarySlice;
+export default collection;
