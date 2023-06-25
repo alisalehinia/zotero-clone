@@ -15,7 +15,6 @@ const MiddleContainerComponent = () => {
                     return <AttachmentContainer key={attachment._id} sx={{ backgroundColor: backgroundColor }}>
                         <Box>{attachment.name}</Box>
                         <Box>{attachment._id}</Box>
-                        <Box>3</Box>
                     </AttachmentContainer>
                 })
             }
