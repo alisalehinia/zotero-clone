@@ -31,3 +31,17 @@ export const addNewCollectionAsync = (libraryId, collectionData) => {
         }
     };
 };
+
+export const updateCollectionAsync = (libraryId, collectionId, updatedData) => {
+    return async (dispatch) => {
+        try {
+            // Make API call here to update the collection within the library
+            const res = await http.patch(`/collections/${collectionId}`, updatedData); // Replace with your actual API endpoint and request data
+
+            dispatch(collectionActions.updateCollection({ libraryId, collectionId, updatedData: res.data.data }));
+            ToastBar.success("update library")
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};

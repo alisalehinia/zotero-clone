@@ -100,12 +100,7 @@ const LibraryTree = () => {
                                     anchorEl={anchorEl}
                                     open={open}
                                     onClose={handleClose}
-                                // PaperProps={{
-                                //     style: {
-                                //         maxHeight: "30vh",
-                                //         width: '20ch',
-                                //     },
-                                // }}
+
                                 >
                                     {/* //! add new library */}
                                     <MenuItem >

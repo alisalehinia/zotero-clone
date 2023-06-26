@@ -30,6 +30,18 @@ const collection = createSlice({
 
             state.library[libraryId].push(collectionData);
         },
+        updateCollection(state, action) {
+            const { libraryId, collectionId, updatedData } = action.payload;
+
+            const collectionsArray = state.library[libraryId];
+            if (collectionsArray) {
+                const collectionToUpdate = collectionsArray.find(collection => collection.id === collectionId);
+                if (collectionToUpdate) {
+                    // Update the collection with the provided ID
+                    Object.assign(collectionToUpdate, updatedData);
+                }
+            }
+        },
     },
 });
 

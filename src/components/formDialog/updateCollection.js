@@ -10,22 +10,24 @@ import http from 'services/httpService';
 import { toast } from 'react-hot-toast';
 import { Box, InputLabel } from '@mui/material';
 import { Input } from 'styles/input';
+import { useDispatch } from 'react-redux';
+import { collectionActions } from 'store/collection/collection-slice';
+import { updateCollectionAsync } from 'store/collection/collection-actions';
 
 
-export default function UpdateCollectionFormDialog({ text, collectionId, libraryId, fetchLibraryCollections, menuClose }) {
+export default function UpdateCollectionFormDialog({ text, libraryId, collectionId, menuClose }) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState(null);
 
+    const dispatch = useDispatch();
+
     const changeCollectionInfo = async (collectionId) => {
-        try {
-            const res = await http.patch(`/collections/${collectionId}`, {
-                name: name,
-            })
-            fetchLibraryCollections(libraryId)
-            console.log("update collection info", res.data);
-        } catch (error) {
-            console.log("update collection info fail", error);
+
+        const updatedData = {
+            name: name
         }
+
+        dispatch(updateCollectionAsync(libraryId, collectionId, updatedData));
     }
     const handleClickOpen = () => {
         setOpen(true);
