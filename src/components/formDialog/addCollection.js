@@ -10,25 +10,23 @@ import http from 'services/httpService';
 import { toast } from 'react-hot-toast';
 import { Box, InputLabel } from '@mui/material';
 import { Input } from 'styles/input';
+import { useDispatch } from 'react-redux';
+import { addNewCollectionAsync } from 'store/collection/collection-actions';
 
 
-export default function FormDialog({ text, parentId, fetchLibraryCollections, menuClose }) {
+export default function AddNewCollectionDialog({ text, parentId, menuClose }) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState(null);
 
+    const dispatch = useDispatch();
 
     const addCollection = () => {
-        console.log(name);
-        http.post(`/libraries/${parentId}/collections`, {
+
+        const collectionData = {
             name: name
-        }).then((response) => {
-            console.log("success ----------", response);
-            fetchLibraryCollections(parentId)
-            toast.success("new collection added")
-        }).catch((error) => {
-            console.log("failure -----------", error);
-            toast.error(error.response.data.message)
-        })
+        }
+
+        dispatch(addNewCollectionAsync(parentId, collectionData));
     }
 
     const handleClickOpen = () => {

@@ -13,6 +13,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddLibraryDialog from '../formDialog/addLibrary';
 import UpdateLibraryDialog from '../formDialog/updateLibrary';
+import AddNewCollectionDialog from '../formDialog/addCollection';
 
 const LibraryTree = () => {
 
@@ -109,6 +110,10 @@ const LibraryTree = () => {
                                     {/* //! add new library */}
                                     <MenuItem >
                                         <AddLibraryDialog text="new library" />
+                                    </MenuItem>
+                                    {/* //! new collection */}
+                                    <MenuItem>
+                                        <AddNewCollectionDialog text="new collection" parentId={library._id} menuClose={handleClose} />
                                     </MenuItem>
                                     {/* //! update library */}
                                     <MenuItem>

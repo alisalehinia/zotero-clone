@@ -21,6 +21,15 @@ const collection = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        addNewCollection(state, action) {
+            const { libraryId, collectionData } = action.payload;
+
+            if (!state.library[libraryId]) {
+                state.library[libraryId] = []; // Initialize the collections array for the library if it doesn't exist
+            }
+
+            state.library[libraryId].push(collectionData);
+        },
     },
 });
 

@@ -8,7 +8,6 @@ export const fetchUserLibraries = () => {
         try {
             dispatch(libraryActions.fetchUserLibrariesStart());
 
-            // Make API call here to fetch the user's libraries
             const res = await http.get('/libraries');
 
             dispatch(libraryActions.fetchUserLibrariesSuccess(res.data.data));
