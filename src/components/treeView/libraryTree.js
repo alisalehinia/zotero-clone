@@ -49,8 +49,8 @@ const LibraryTree = () => {
         toast.error(error);
         return;
     }
-    const deleteLibrary = async (id) => {
-        await dispatch(deleteLibraryByIdAsync(id));
+    const deleteLibrary = (id) => {
+        dispatch(deleteLibraryByIdAsync(id));
     }
 
 

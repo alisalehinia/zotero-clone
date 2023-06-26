@@ -42,6 +42,14 @@ const collection = createSlice({
                 }
             }
         },
+        deleteCollectionById(state, action) {
+            const { libraryId, collectionId } = action.payload;
+
+            const collectionsArray = state.library[libraryId];
+            if (collectionsArray) {
+                state.library[libraryId] = collectionsArray.filter(collection => collection.id !== collectionId);
+            }
+        },
     },
 });
 

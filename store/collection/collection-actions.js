@@ -39,9 +39,25 @@ export const updateCollectionAsync = (libraryId, collectionId, updatedData) => {
             const res = await http.patch(`/collections/${collectionId}`, updatedData); // Replace with your actual API endpoint and request data
 
             dispatch(collectionActions.updateCollection({ libraryId, collectionId, updatedData: res.data.data }));
-            ToastBar.success("update library")
+            toast.success("update library")
         } catch (error) {
             console.log(error);
         }
     };
 };
+
+export const deleteCollectionByIdAsync = (libraryId, collectionId) => {
+    return async (dispatch) => {
+        try {
+            // Make API call here to delete the collection within the library
+            await http.delete(`/collections/${collectionId}`); // Replace with your actual API endpoint
+
+            dispatch(collectionActions.deleteCollectionById({ libraryId, collectionId }));
+            toast.success("delete collection")
+        } catch (error) {
+            console.log(error);
+
+        }
+    };
+};
+
