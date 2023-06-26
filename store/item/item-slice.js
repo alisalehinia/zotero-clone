@@ -21,6 +21,15 @@ const item = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        addNewItem(state, action) {
+            const { collectionId, itemData } = action.payload;
+
+            if (!state.itemsOfCollections[collectionId]) {
+                state.itemsOfCollections[collectionId] = []; // Initialize the items array for the collection if it doesn't exist
+            }
+
+            state.itemsOfCollections[collectionId].push(itemData);
+        },
     },
 });
 

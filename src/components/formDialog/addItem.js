@@ -10,9 +10,11 @@ import http from 'services/httpService';
 import { toast } from 'react-hot-toast';
 import { Box, InputLabel } from '@mui/material';
 import { Input } from 'styles/input';
+import { useDispatch } from 'react-redux';
+import { addNewItemAsync } from 'store/item/item-actions';
 
 
-export default function FormDialog({ text, collectionId, fetchCollectionItems, menuClose }) {
+export default function AddNewItemDialog({ text, collectionId, menuClose }) {
     const [open, setOpen] = React.useState(false);
 
     const [name, setName] = React.useState(null);
@@ -22,24 +24,20 @@ export default function FormDialog({ text, collectionId, fetchCollectionItems, m
     const [tags, setTags] = React.useState([]);       //? array of tag objects
     const [related, setRelated] = React.useState([]);  //? array of items
 
+    const dispatch = useDispatch();
 
     const addItem = () => {
-        console.log(name);
-        http.post(`/collections/${collectionId}/items`, {
+
+        const itemData = {
             name: name,
             primaryAttachment: primaryAttachment,
             itemType: itemType,
             metadata: metadata,
             tags: tags,
             related: related
-        }).then((response) => {
-            console.log("success ----------", response)
-            toast.success("new item added");
-            fetchCollectionItems(collectionId);
-        }).catch((error) => {
-            console.log("failure to add item-----------", error);
-            toast.error(error.response.data.message)
-        })
+        }
+
+        dispatch(addNewItemAsync(collectionId, itemData));
     }
 
     const handleClickOpen = () => {

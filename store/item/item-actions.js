@@ -16,3 +16,16 @@ export const fetchCollectionItems = (collectionId) => {
         }
     };
 };
+
+export const addNewItemAsync = (collectionId, itemData) => {
+    return async (dispatch) => {
+        try {
+            // Make API call here to add the new item to the collection
+            const res = await http.post(`/collections/${collectionId}/items`, itemData); // Replace with your actual API endpoint and request data
+
+            dispatch(itemActions.addNewItem({ collectionId, itemData: res.data.data }));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};

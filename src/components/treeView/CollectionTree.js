@@ -11,6 +11,7 @@ import { fetchCollectionItems } from "store/item/item-actions";
 import UpdateCollectionFormDialog from "../formDialog/updateCollection";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Colors } from "styles/theme";
+import AddNewItemDialog from "../formDialog/addItem";
 
 const CollectionTree = ({ libraryId }) => {
 
@@ -89,7 +90,9 @@ const CollectionTree = ({ libraryId }) => {
                                 <UpdateCollectionFormDialog text="update collection" libraryId={libraryId} collectionId={collection._id} menuClose={handleClose} />
                             </MenuItem>
                             {/* //! add new item */}
-                            <MenuItem>add new item</MenuItem>
+                            <MenuItem>
+                                <AddNewItemDialog text="add new item" collectionId={collection._id} menuClose={handleClose} />
+                            </MenuItem>
                             {/* //! delete collection */}
                             <MenuItem>
                                 <Button onClick={() => {
