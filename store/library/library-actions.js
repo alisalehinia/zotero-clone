@@ -1,5 +1,6 @@
 import http from "services/httpService";
 import { libraryActions } from "./library-slice";
+import { toast } from "react-hot-toast";
 
 
 export const fetchUserLibraries = () => {
@@ -29,6 +30,20 @@ export const updateLibraryByIdAsync = (id, updatedData) => {
         }
     };
 };
+
+export const addNewLibraryAsync = (newLibraryData) => {
+    return async (dispatch) => {
+        try {
+
+            const res = await http.post('/libraries', newLibraryData);
+            toast.success("new library added")
+            dispatch(libraryActions.addNewLibrary(res.data.data));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
 export const deleteLibraryByIdAsync = (id) => {
     return async (dispatch) => {
         try {

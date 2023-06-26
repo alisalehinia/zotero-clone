@@ -9,9 +9,11 @@ import http from 'services/httpService';
 import { toast } from 'react-hot-toast';
 import { Input } from 'styles/input';
 import { Box, Checkbox, InputLabel, MenuItem, Select } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { addNewLibraryAsync, updateLibraryByIdAsync } from 'store/library/library-actions';
 
 
-export default function FormDialog({ text, fetchLibraries }) {
+export default function AddLibraryDialog({ text }) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState(null);
     const [group, setGroup] = React.useState(null);
@@ -19,20 +21,15 @@ export default function FormDialog({ text, fetchLibraries }) {
 
     const [allUserGroups, setAllUserGroups] = React.useState();
 
+    const dispatch = useDispatch();
+
     const addLibrary = () => {
-        console.log(name);
-        http.post("/libraries", {
+        const newLibraryData = {
             name: name,
             group: group,
             private: privateGroup
-        }).then((response) => {
-            console.log("success ----------", response);
-            fetchLibraries();
-            toast.success("new library added")
-        }).catch((error) => {
-            console.log("failure -----------", error);
-            toast.error(error?.response?.data?.message)
-        })
+        }
+        dispatch(addNewLibraryAsync(newLibraryData));
     }
     const fetchUserGroups = () => {
         http.get("/groups").then((res) => {

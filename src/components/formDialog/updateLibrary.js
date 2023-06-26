@@ -10,15 +10,19 @@ import http from 'services/httpService';
 import { toast } from 'react-hot-toast';
 import { Box, Checkbox, InputLabel, MenuItem, Select } from '@mui/material';
 import { Input } from 'styles/input';
+import { useDispatch } from 'react-redux';
+import { updateLibraryByIdAsync } from 'store/library/library-actions';
 
 
-export default function UpdateFormDialog({ text, libraryId, fetchLibraries, menuClose }) {
+export default function UpdateLibraryDialog({ text, libraryId, menuClose }) {
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState(null);
     const [group, setGroup] = React.useState(null);
     const [privateGroup, setPrivateGroup] = React.useState(false);
 
     const [allUserGroups, setAllUserGroups] = React.useState();
+
+    const dispatch = useDispatch();
 
     const fetchUserGroups = () => {
         http.get("/groups").then((res) => {
@@ -28,18 +32,12 @@ export default function UpdateFormDialog({ text, libraryId, fetchLibraries, menu
         }).catch((err) => console.log(err))
     }
     const changeLibraryInfo = async (libraryId) => {
-        try {
-            const res = await http.patch(`/libraries/${libraryId}`, {
-                name: name,
-                group: group,
-                private: privateGroup
-            })
-            console.log("update library info", res.data);
-
-            fetchLibraries()
-        } catch (error) {
-            console.log("update library info fail", error);
+        const updatedData = {
+            name: name,
+            group: group,
+            private: privateGroup
         }
+        dispatch(updateLibraryByIdAsync(libraryId, updatedData))
     }
     const handleClickOpen = () => {
         setOpen(true);

@@ -1,7 +1,7 @@
 import { TreeView, TreeItem } from '@mui/lab';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Menu, MenuItem } from '@mui/material';
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import CollectionTree from './CollectionTree';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,8 @@ import { Colors } from 'styles/theme';
 import { toast } from 'react-hot-toast';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AddLibraryDialog from '../formDialog/addLibrary';
+import UpdateLibraryDialog from '../formDialog/updateLibrary';
 
 const LibraryTree = () => {
 
@@ -97,22 +99,31 @@ const LibraryTree = () => {
                                     anchorEl={anchorEl}
                                     open={open}
                                     onClose={handleClose}
-                                    PaperProps={{
-                                        style: {
-                                            maxHeight: "30vh",
-                                            width: '20ch',
-                                        },
-                                    }}
+                                // PaperProps={{
+                                //     style: {
+                                //         maxHeight: "30vh",
+                                //         width: '20ch',
+                                //     },
+                                // }}
                                 >
-                                    <MenuItem onClick={handleClose}>new library</MenuItem>
-                                    <MenuItem onClick={handleClose}>update library</MenuItem>
+                                    {/* //! add new library */}
+                                    <MenuItem >
+                                        <AddLibraryDialog text="new library" />
+                                    </MenuItem>
+                                    {/* //! update library */}
+                                    <MenuItem>
+                                        <UpdateLibraryDialog text="update library" libraryId={library._id} menuClose={handleClose} />
+                                    </MenuItem>
                                     {/* //! delete library */}
-                                    <MenuItem onClick={handleClose}>
-                                        <IconButton aria-label="delete">
-                                            <DeleteIcon onClick={() => {
-                                                setDeleteDialogOpen(true);
-                                            }} />
-                                        </IconButton>
+                                    <MenuItem>
+                                        <Button onClick={() => {
+                                            setDeleteDialogOpen(true);
+                                        }}>
+                                            <IconButton aria-label="delete">
+                                                <DeleteIcon />
+                                            </IconButton>
+                                            <Typography sx={{ color: Colors.danger, fontSize: "12px", width: "100%", height: "100%" }}>delete</Typography>
+                                        </Button>
                                         {/* //! delete dialog  */}
                                         <Dialog
                                             open={deleteDialogOpen}
@@ -133,13 +144,13 @@ const LibraryTree = () => {
                                                 <Button sx={{ color: Colors.danger }} onClick={() => {
                                                     deleteLibrary(library._id);
                                                     setDeleteDialogOpen(false);
+                                                    handleClose()
                                                 }} autoFocus>
                                                     delete
                                                 </Button>
                                             </DialogActions>
                                         </Dialog>
                                     </MenuItem>
-
                                 </Menu>
                             </Box>
                         </div>

@@ -30,6 +30,10 @@ const librarySlice = createSlice({
                 Object.assign(libraryToUpdate, updatedData);
             }
         },
+        addNewLibrary(state, action) {
+            const newLibrary = action.payload;
+            state.libraries.push(newLibrary);
+        },
         deleteLibraryById(state, action) {
             const id = action.payload;
             state.libraries = state.libraries.filter(library => library.id !== id);

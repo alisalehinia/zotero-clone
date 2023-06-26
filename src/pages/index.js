@@ -20,6 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { fetchLibraryCollections } from "store/collection/collection-actions";
 import CollectionTree from "@/components/treeView/CollectionTree";
+import AddLibraryDialog from "@/components/formDialog/addLibrary";
 
 
 const Home = () => {
@@ -32,6 +33,7 @@ const Home = () => {
         <HomeContainer>
             {/* //! left sidebar */}
             <LeftSideBar>
+                <AddLibraryDialog text="new library" />
                 <LibraryTree />
             </LeftSideBar>
 
