@@ -23,6 +23,7 @@ const librarySlice = createSlice({
         },
         updateLibraryById(state, action) {
             const { id, updatedData } = action.payload;
+            console.log("updateLibraryById=>", id);
 
             const libraryToUpdate = state.libraries.find(library => library.id === id);
             if (libraryToUpdate) {

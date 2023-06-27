@@ -29,3 +29,17 @@ export const addNewItemAsync = (collectionId, itemData) => {
         }
     };
 };
+
+export const updateItemAsync = (collectionId, itemId, updatedData) => {
+    return async (dispatch) => {
+        try {
+            // Make API call here to update the item within the collection
+            const res = await http.patch(`/items/${itemId}`, updatedData); // Replace with your actual API endpoint and request data
+
+            dispatch(itemActions.updateItem({ collectionId, itemId, updatedData: res.data.data }));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+

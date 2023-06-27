@@ -15,8 +15,9 @@ import { updateLibraryByIdAsync } from 'store/library/library-actions';
 
 
 export default function UpdateLibraryDialog({ text, libraryId, menuClose }) {
+    console.log("updatelibrarydialog", libraryId);
     const [open, setOpen] = React.useState(false);
-    const [name, setName] = React.useState(null);
+    const [name, setName] = React.useState("");
     const [group, setGroup] = React.useState(null);
     const [privateGroup, setPrivateGroup] = React.useState(false);
 

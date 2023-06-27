@@ -19,15 +19,22 @@ const LibraryTree = () => {
 
     // ! delete dialog state
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    // ! selected library to delete
+    const [libraryToDelete, setLibraryToDelete] = useState();
+
     //! menu states
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event) => {
+    const handleMenuClick = (event, library) => {
         setAnchorEl(event.currentTarget);
+        setLibraryToDelete(library);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
+        setLibraryToDelete(null);
     };
+    // //!----------------------------------
 
 
     const dispatch = useDispatch();
@@ -49,6 +56,7 @@ const LibraryTree = () => {
         toast.error(error);
         return;
     }
+
     const deleteLibrary = (id) => {
         dispatch(deleteLibraryByIdAsync(id));
     }
@@ -58,6 +66,7 @@ const LibraryTree = () => {
         <>
             <Box>
                 {loading && <CircularProgress />}
+                {console.log("libraries =>", libraries)}
                 {libraries.map((library) => {
                     return (
                         <div key={library._id} className='w-full flex items-start justify-start'>
@@ -88,17 +97,17 @@ const LibraryTree = () => {
                                     aria-controls={open ? 'long-menu' : undefined}
                                     aria-expanded={open ? 'true' : undefined}
                                     aria-haspopup="true"
-                                    onClick={handleClick}
+                                    onClick={(event) => handleMenuClick(event, library)}
                                 >
                                     <MoreVertIcon />
                                 </IconButton>
                                 <Menu
-                                    id="long-menu"
+                                    id={`long-menu-${library._id}`}
                                     MenuListProps={{
-                                        'aria-labelledby': 'long-button',
+                                        'aria-labelledby': `long-button-${library._id}`,
                                     }}
                                     anchorEl={anchorEl}
-                                    open={open}
+                                    open={open && libraryToDelete === library}
                                     onClose={handleClose}
 
                                 >
@@ -112,6 +121,7 @@ const LibraryTree = () => {
                                     </MenuItem>
                                     {/* //! update library */}
                                     <MenuItem>
+                                        <Box>{library.name}</Box>
                                         <UpdateLibraryDialog text="update library" libraryId={library._id} menuClose={handleClose} />
                                     </MenuItem>
                                     {/* //! delete library */}

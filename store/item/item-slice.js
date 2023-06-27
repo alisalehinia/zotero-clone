@@ -30,6 +30,18 @@ const item = createSlice({
 
             state.itemsOfCollections[collectionId].push(itemData);
         },
+        updateItem(state, action) {
+            const { collectionId, itemId, updatedData } = action.payload;
+
+            const itemsArray = state.itemsOfCollections[collectionId];
+            if (itemsArray) {
+                const itemToUpdate = itemsArray.find(item => item.id === itemId);
+                if (itemToUpdate) {
+                    // Update the item with the provided ID
+                    Object.assign(itemToUpdate, updatedData);
+                }
+            }
+        },
     },
 });
 

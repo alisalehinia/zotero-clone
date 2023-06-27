@@ -20,6 +20,8 @@ const CollectionTree = ({ libraryId }) => {
 
     // ! delete dialog state
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    // ! selected collection to delete
+    const [collectionToDelete, setCollectionToDelete] = useState();
 
     // ! delete collection by Id
     const handleCollectionDelete = (collectionId) => {
@@ -29,11 +31,14 @@ const CollectionTree = ({ libraryId }) => {
     //! menu states
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event) => {
+    const handleMenuClick = (event, collection) => {
         setAnchorEl(event.currentTarget);
+        setCollectionToDelete(collection);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
+        setCollectionToDelete(null);
     };
 
     const collections = useSelector((state) => state.collection.library);
@@ -71,17 +76,17 @@ const CollectionTree = ({ libraryId }) => {
                             aria-controls={open ? 'long-menu' : undefined}
                             aria-expanded={open ? 'true' : undefined}
                             aria-haspopup="true"
-                            onClick={handleClick}
+                            onClick={(event) => handleMenuClick(event, collection)}
                         >
                             <MoreVertIcon />
                         </IconButton>
                         <Menu
-                            id="long-menu"
+                            id={`long-menu-${collection._id}`}
                             MenuListProps={{
-                                'aria-labelledby': 'long-button',
+                                'aria-labelledby': `long-button-${collection._id}`,
                             }}
                             anchorEl={anchorEl}
-                            open={open}
+                            open={open && collectionToDelete === collection}
                             onClose={handleClose}
 
                         >
@@ -130,6 +135,7 @@ const CollectionTree = ({ libraryId }) => {
                                     </DialogActions>
                                 </Dialog>
                             </MenuItem>
+                            <MenuItem>add note</MenuItem>
                         </Menu>
                     </Box>
                 </div>
