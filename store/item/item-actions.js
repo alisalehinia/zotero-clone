@@ -43,3 +43,15 @@ export const updateItemAsync = (collectionId, itemId, updatedData) => {
     };
 };
 
+export const deleteItemAsync = (collectionId, itemId) => {
+    return async (dispatch) => {
+        try {
+            // Make API call here to delete the item from the collection
+            await http.delete(`/items/${itemId}`); // Replace with your actual API endpoint
+
+            dispatch(itemActions.deleteItem({ collectionId, itemId }));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};

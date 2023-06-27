@@ -1,10 +1,10 @@
 import { useAttachmentContext } from "@/context/AttachmentContext";
 import { TreeItem } from "@mui/lab"
-import { Box, CircularProgress, IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import http from "services/httpService";
-import { fetchCollectionItems } from "store/item/item-actions";
+import { deleteItemAsync, fetchCollectionItems } from "store/item/item-actions";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Colors } from "styles/theme";
@@ -18,6 +18,13 @@ const ItemTree = ({ collectionId }) => {
     const loading = useSelector((state) => state.item.loading);
 
     const dispatch = useDispatch();
+
+    const handleDeleteItem = (collectionId, itemId) => {
+        // Call the deleteItemAsync action creator
+        dispatch(deleteItemAsync(collectionId, itemId));
+    };
+    // ! delete dialog state
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     // ! selected item to delete
     const [itemToDelete, setItemToDelete] = useState();
     //! menu states
@@ -88,11 +95,46 @@ const ItemTree = ({ collectionId }) => {
                                 <UpdateItemFormDialog text="update item" itemId={item._id} collectionId={collectionId} menuClose={handleClose} />
                             </MenuItem>
                             {/* //! add new attachment */}
-                            <MenuItem>3</MenuItem>
+                            <MenuItem>add new attachment</MenuItem>
                             {/* //! add note*/}
-                            <MenuItem>3</MenuItem>
+                            <MenuItem>add note</MenuItem>
                             {/* //! delete */}
-                            <MenuItem>3</MenuItem>
+                            <MenuItem>
+                                <Button onClick={() => {
+                                    setDeleteDialogOpen(true);
+                                }}>
+                                    <IconButton aria-label="delete">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                    <Typography sx={{ color: Colors.danger, fontSize: "12px", width: "100%", height: "100%" }}>delete</Typography>
+                                </Button>
+                                {/* //! delete dialog  */}
+                                <Dialog
+                                    open={deleteDialogOpen}
+                                    onClose={() => setDeleteDialogOpen(false)}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                >
+                                    <DialogTitle id="alert-dialog-title">
+                                        {"Are you sure you want to delete an item?"}
+                                    </DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                            Cancel to close window
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={() => { setDeleteDialogOpen(false) }}>cancel</Button>
+                                        <Button sx={{ color: Colors.danger }} onClick={() => {
+                                            handleDeleteItem(collectionId, item._id)
+                                            setDeleteDialogOpen(false);
+                                            handleClose()
+                                        }} autoFocus>
+                                            delete
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
+                            </MenuItem>
                         </Menu>
                     </Box>
                 </div>

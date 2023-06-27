@@ -42,6 +42,18 @@ const item = createSlice({
                 }
             }
         },
+        deleteItem(state, action) {
+            const { collectionId, itemId } = action.payload;
+
+            const itemsArray = state.itemsOfCollections[collectionId];
+            if (itemsArray) {
+                const index = itemsArray.findIndex((item) => item.id === itemId);
+                if (index !== -1) {
+                    // Remove the item from the array
+                    itemsArray.splice(index, 1);
+                }
+            }
+        },
     },
 });
 
