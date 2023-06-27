@@ -9,6 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Colors } from "styles/theme";
 import UpdateItemFormDialog from "../formDialog/updateItem";
+import AddAttachment from "../formDialog/addAttachment";
 
 
 const ItemTree = ({ collectionId }) => {
@@ -95,7 +96,9 @@ const ItemTree = ({ collectionId }) => {
                                 <UpdateItemFormDialog text="update item" itemId={item._id} collectionId={collectionId} menuClose={handleClose} />
                             </MenuItem>
                             {/* //! add new attachment */}
-                            <MenuItem>add new attachment</MenuItem>
+                            <MenuItem>
+                                <AddAttachment text="add attachment" itemId={item._id} />
+                            </MenuItem>
                             {/* //! add note*/}
                             <MenuItem>add note</MenuItem>
                             {/* //! delete */}
