@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-hot-toast';
 
 const collection = createSlice({
     name: 'collection',
@@ -49,6 +50,29 @@ const collection = createSlice({
             if (collectionsArray) {
                 state.library[libraryId] = collectionsArray.filter(collection => collection.id !== collectionId);
             }
+        },
+        addNoteToCollectionStart(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        addNoteToCollectionSuccess(state, action) {
+            const { libraryId, collectionId, noteData } = action.payload;
+            const collections = state.library[libraryId];
+
+            if (collections) {
+                const collection = collections.find(collection => collection.id === collectionId);
+
+                if (collection) {
+                    collection.notes.push(noteData);
+                }
+            }
+
+            state.loading = false;
+            state.error = null;
+        },
+        addNoteToCollectionFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload;
         },
     },
 });

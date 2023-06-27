@@ -61,3 +61,25 @@ export const deleteCollectionByIdAsync = (libraryId, collectionId) => {
     };
 };
 
+export const addNoteToCollectionAsync = (libraryId, collectionId, noteData) => {
+    return async (dispatch, getState) => {
+        try {
+            dispatch(collectionActions.addNoteToCollectionStart());
+
+            const collections = getState().collection.library[libraryId];
+
+            if (collections) {
+                const collection = collections.find(collection => collection.id === collectionId);
+
+                if (collection) {
+                    const response = await http.post(`/collections/${collectionId}/notes`, noteData);
+
+                    dispatch(collectionActions.addNoteToCollectionSuccess({ libraryId, collectionId, noteData: response.data.data }));
+                    toast.success("add note success")
+                }
+            }
+        } catch (error) {
+            dispatch(collectionActions.addNoteToCollectionFailure(error.message));
+        }
+    };
+};

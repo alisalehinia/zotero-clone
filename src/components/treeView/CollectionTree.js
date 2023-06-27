@@ -12,6 +12,7 @@ import UpdateCollectionFormDialog from "../formDialog/updateCollection";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Colors } from "styles/theme";
 import AddNewItemDialog from "../formDialog/addItem";
+import AddNoteToCollectionDialog from "../formDialog/addNoteToCollection";
 
 const CollectionTree = ({ libraryId }) => {
 
@@ -98,6 +99,10 @@ const CollectionTree = ({ libraryId }) => {
                             <MenuItem>
                                 <AddNewItemDialog text="add new item" collectionId={collection._id} menuClose={handleClose} />
                             </MenuItem>
+                            {/* //! add note to collection */}
+                            <MenuItem>
+                                <AddNoteToCollectionDialog dialogText="add note" collectionId={collection._id} libraryId={libraryId} />
+                            </MenuItem>
                             {/* //! delete collection */}
                             <MenuItem>
                                 <Button onClick={() => {
@@ -135,7 +140,6 @@ const CollectionTree = ({ libraryId }) => {
                                     </DialogActions>
                                 </Dialog>
                             </MenuItem>
-                            <MenuItem>add note</MenuItem>
                         </Menu>
                     </Box>
                 </div>
