@@ -10,10 +10,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Colors } from "styles/theme";
 import UpdateItemFormDialog from "../formDialog/updateItem";
 import AddAttachment from "../formDialog/addAttachment";
+import AddNoteToItem from "../formDialog/addNoteToItem";
+import { useUIContext } from "@/context/ui";
 
 
 const ItemTree = ({ collectionId }) => {
     const { attachments, setAttachments } = useAttachmentContext();
+    const { setSelectedItem } = useUIContext();
 
     const items = useSelector((state) => state.item.itemsOfCollections);
     const loading = useSelector((state) => state.item.loading);
@@ -60,7 +63,7 @@ const ItemTree = ({ collectionId }) => {
     return (
         items[collectionId].map((item) => {
             return (
-                <div key={item._id} className='w-full flex items-start justify-start'>
+                <div key={item._id} className='w-full flex items-start justify-start' onClick={() => setSelectedItem(item._id)}>
                     <div className='flex-grow mt-2'>
                         <TreeItem key={item._id}
 
@@ -100,7 +103,9 @@ const ItemTree = ({ collectionId }) => {
                                 <AddAttachment text="add attachment" itemId={item._id} />
                             </MenuItem>
                             {/* //! add note*/}
-                            <MenuItem>add note</MenuItem>
+                            <MenuItem>
+                                <AddNoteToItem collectionId={collectionId} itemId={item._id} dialogText="add note to Item" />
+                            </MenuItem>
                             {/* //! delete */}
                             <MenuItem>
                                 <Button onClick={() => {

@@ -55,3 +55,19 @@ export const deleteItemAsync = (collectionId, itemId) => {
         }
     };
 };
+
+// Add note to item by id
+export const addNoteToItemAsync = (collectionId, itemId, note) => {
+    return async (dispatch) => {
+        try {
+            console.log(note);
+            // Make API call here to add the note to the item
+            const res = await http.post(`/items/${itemId}/notes`, { text: note.text });
+            // Replace with your actual API endpoint and request data
+
+            dispatch(itemActions.addNoteToItem({ collectionId, itemId, note: res.data.data }));
+        } catch (error) {
+            console.log("error", error);
+        }
+    };
+};

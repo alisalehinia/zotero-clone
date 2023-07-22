@@ -55,6 +55,21 @@ const item = createSlice({
             }
         },
     },
+    // Add note to item by id
+    addNoteToItem(state, action) {
+        const { collectionId, itemId, note } = action.payload;
+        const itemsArray = state.itemsOfCollections[collectionId];
+        if (itemsArray) {
+            const itemToUpdate = itemsArray.find(item => item.id === itemId);
+            if (itemToUpdate) {
+                // Add the note to the item with the provided ID
+                if (!itemToUpdate.notes) {
+                    itemToUpdate.notes = []; // Initialize the notes array for the item if it doesn't exist
+                }
+                itemToUpdate.notes.push([...note]);
+            }
+        }
+    },
 });
 
 export const itemActions = item.actions;

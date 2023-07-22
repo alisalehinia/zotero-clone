@@ -21,13 +21,15 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { fetchLibraryCollections } from "store/collection/collection-actions";
 import CollectionTree from "@/components/treeView/CollectionTree";
 import AddLibraryDialog from "@/components/formDialog/addLibrary";
+import Notes from "@/components/rightsidebar/Notes";
+import { useUIContext } from "@/context/ui";
 
 
 const Home = () => {
     const { locale, locales, push } = useRouter();
     const { attachments, setAttachments } = useAttachmentContext();
 
-
+    const { selectedItem } = useUIContext();
 
     return (
         <HomeContainer>
@@ -44,7 +46,7 @@ const Home = () => {
             </MiddleContainer>
             {/* //! right sidebar */}
             <RightSideBar>
-                3
+                {selectedItem && <Notes itemId={selectedItem} />}
             </RightSideBar>
         </HomeContainer>
     );
