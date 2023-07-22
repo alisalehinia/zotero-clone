@@ -29,8 +29,11 @@ const Home = () => {
     const { locale, locales, push } = useRouter();
     const { attachments, setAttachments } = useAttachmentContext();
 
-    const { selectedItem } = useUIContext();
+    const { selectedItem, selectedCollection } = useUIContext();
 
+    useEffect(() => {
+        console.log(selectedCollection);
+    }, [selectedCollection])
     return (
         <HomeContainer>
             {/* //! left sidebar */}
@@ -46,7 +49,7 @@ const Home = () => {
             </MiddleContainer>
             {/* //! right sidebar */}
             <RightSideBar>
-                {selectedItem && <Notes itemId={selectedItem} />}
+                {(selectedItem || selectedCollection) && <Notes itemId={selectedItem} collectionId={selectedCollection} />}
             </RightSideBar>
         </HomeContainer>
     );

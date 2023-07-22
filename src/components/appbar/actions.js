@@ -13,7 +13,7 @@ export default function Actions({ matches }) {
     const { user } = useAuth();
     const dispatch = useAuthActions();
 
-    console.log(user);
+
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {

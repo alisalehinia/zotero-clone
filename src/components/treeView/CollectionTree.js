@@ -13,10 +13,11 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Colors } from "styles/theme";
 import AddNewItemDialog from "../formDialog/addItem";
 import AddNoteToCollectionDialog from "../formDialog/addNoteToCollection";
+import { useUIContext } from "@/context/ui";
 
 const CollectionTree = ({ libraryId }) => {
 
-
+    const { setSelectedCollection } = useUIContext();
     const dispatch = useDispatch();
 
     // ! delete dialog state
@@ -58,7 +59,7 @@ const CollectionTree = ({ libraryId }) => {
     return (
         collections[libraryId].map((collection) => {
             return (
-                <div key={collection._id} className='w-full flex items-start justify-start'>
+                <div key={collection._id} className='w-full flex items-start justify-start' onClick={() => setSelectedCollection(collection._id)}>
                     <div className='flex-grow mt-2'>
                         <TreeItem key={collection._id}
 
