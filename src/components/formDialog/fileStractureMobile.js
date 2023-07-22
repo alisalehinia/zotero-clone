@@ -13,6 +13,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import LeftSideBar from '../leftsidebar';
 import { ListItemButton, styled, useTheme } from '@mui/material';
+import AddLibraryDialog from './addLibrary';
+import LibraryTree from '../treeView/libraryTree';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -65,7 +67,8 @@ export default function FileStructureMobile() {
                         </IconButton>
                     </Toolbar>
                 </AppBar>
-                <LeftSideBar />
+                <AddLibraryDialog text="new library" />
+                <LibraryTree />
             </Dialog>
         </div >
     );

@@ -66,7 +66,6 @@ const LibraryTree = () => {
         <>
             <Box>
                 {loading && <CircularProgress />}
-                {console.log("libraries =>", libraries)}
                 {libraries.map((library) => {
                     return (
                         <div key={library._id} className='w-full flex items-start justify-start'>
@@ -121,7 +120,6 @@ const LibraryTree = () => {
                                     </MenuItem>
                                     {/* //! update library */}
                                     <MenuItem>
-                                        <Box>{library.name}</Box>
                                         <UpdateLibraryDialog text="update library" libraryId={library._id} menuClose={handleClose} />
                                     </MenuItem>
                                     {/* //! delete library */}
