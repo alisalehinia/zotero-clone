@@ -32,8 +32,9 @@ const Home = () => {
     const { selectedItem, selectedCollection } = useUIContext();
 
     useEffect(() => {
-        console.log(selectedCollection);
-    }, [selectedCollection])
+        // console.log(selectedCollection);
+        http.get("/tags").then((res) => console.log("tags", res)).catch((err) => console.log(err))
+    }, [])
     return (
         <HomeContainer>
             {/* //! left sidebar */}

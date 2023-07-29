@@ -29,7 +29,9 @@ export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
                     <Link href="/signup">
                         <ListItemText sx={{ cursor: "pointer" }} primary="Sign up" />
                     </Link> </>}
-                <ListItemText sx={{ cursor: "pointer" }} primary="Groups" />
+                <Link href="/groups">
+                    <ListItemText sx={{ cursor: "pointer" }} primary="Groups" />
+                </Link>
                 <ListItemButton>
                     <ListItemIcon>
                         <SearchRounded onClick={() => setShowSearchBox(true)} />
