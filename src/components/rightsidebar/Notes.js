@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import http from 'services/httpService';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Notes = ({ itemId = null, collectionId = null }) => {
 
@@ -20,6 +21,12 @@ const Notes = ({ itemId = null, collectionId = null }) => {
         fetchItemNotes(itemId);
         fetchCollectionNotes(collectionId)
     }, [itemId, collectionId])
+
+    const deleteItemNoteHandler = (id) => {
+        http.delete(`/notes/${id}`).then((res) => {
+            console.log(res);
+        }).catch((err) => console.log(err))
+    }
     return (
         <div className='border rounded flex m-1'>
             <div className='border-r'>
@@ -29,9 +36,14 @@ const Notes = ({ itemId = null, collectionId = null }) => {
                     itemNotes ? <div className='p-1 m-1'>  <h4>item notes</h4>{
 
                         itemNotes.map(note => (
-                            <div key={note._id} className=' p-1 m-1 border-b flex flex-col '>
-                                <div>
-                                    {note.text}
+                            <div key={note._id} className=' p-1 m-1 border-b flex flex-col overflow-hidden '>
+                                <div className='flex items-center justify-between '>
+                                    <div className='w-24'>
+                                        {note.text}
+                                    </div>
+                                    <div>
+                                        <DeleteIcon onClick={() => deleteItemNoteHandler(note._id)} />
+                                    </div>
                                 </div>
                             </div>
                         ))}</div> : <div>

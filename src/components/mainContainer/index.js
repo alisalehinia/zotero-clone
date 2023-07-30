@@ -30,7 +30,6 @@ const MiddleContainerComponent = () => {
             console.log('Error downloading the file:', error);
         }
     };
-
     return (
         <>
             {

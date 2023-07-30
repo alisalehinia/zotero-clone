@@ -9,13 +9,24 @@ export const MainContainer = styled(Box)(({ theme }) => ({
 }))
 export const LeftSideBar = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
-    width: "25%",
+    width: "100%",
     display: "none",
     [theme.breakpoints.up("md")]: {
-        width: "25%",
-        display: "block"
+        width: "100%",
+        display: "block",
     },
     height: "60vh",
+    overflow: "scroll"
+}))
+export const LeftSideBarTagContainer = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
+    width: "100%",
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+        width: "100%",
+        display: "block"
+    },
+    height: "30vh",
     overflow: "scroll"
 }))
 export const RightSideBar = styled(Box)(({ theme }) => ({

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Button, CircularProgress } from "@mui/material"
-import { HomeContainer, LeftSideBar, MainContainer, MiddleContainer, RightSideBar, SideBar } from "styles/body";
+import { HomeContainer, LeftSideBar, LeftSideBarTagContainer, MainContainer, MiddleContainer, RightSideBar, SideBar } from "styles/body";
 import http from "services/httpService";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -23,6 +23,7 @@ import CollectionTree from "@/components/treeView/CollectionTree";
 import AddLibraryDialog from "@/components/formDialog/addLibrary";
 import Notes from "@/components/rightsidebar/Notes";
 import { useUIContext } from "@/context/ui";
+import TagBox from "@/components/leftsidebar/tagBox";
 
 
 const Home = () => {
@@ -38,10 +39,16 @@ const Home = () => {
     return (
         <HomeContainer>
             {/* //! left sidebar */}
-            <LeftSideBar>
-                <AddLibraryDialog text="new library" />
-                <LibraryTree />
-            </LeftSideBar>
+
+            <Box sx={{ width: "25vw" }}>
+                <LeftSideBar>
+                    <AddLibraryDialog text="new library" />
+                    <LibraryTree />
+                </LeftSideBar>
+                <LeftSideBarTagContainer >
+                    <TagBox />
+                </LeftSideBarTagContainer>
+            </Box>
 
             {/* //! middle container */}
             <MiddleContainer>

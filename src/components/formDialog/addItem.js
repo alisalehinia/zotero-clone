@@ -21,12 +21,13 @@ export default function AddNewItemDialog({ text, collectionId, menuClose }) {
     const [primaryAttachment, setPrimaryAttachment] = React.useState(null); //? the attachment which's metadata will be used
     const [itemType, setItemType] = React.useState(undefined);
     const [metadata, setMetadata] = React.useState({});  //?object
-    const [tags, setTags] = React.useState([]);       //? array of tag objects
+    const [tags, setTags] = React.useState([{ name: "1", color: "1" }]);       //? array of tag objects  { name: string, color: string } 
     const [related, setRelated] = React.useState([]);  //? array of items
 
     const dispatch = useDispatch();
 
     const addItem = () => {
+        console.log(tags);
 
         const itemData = {
             name: name,
@@ -48,6 +49,8 @@ export default function AddNewItemDialog({ text, collectionId, menuClose }) {
         setOpen(false);
     };
 
+    const [newTagKey, setNewTagKey] = React.useState("");
+    const [newTagValue, setNewTagValue] = React.useState("");
 
     return (
         <div>
@@ -63,6 +66,24 @@ export default function AddNewItemDialog({ text, collectionId, menuClose }) {
                             setName(e.target.value);
                         }} />
                     </Box>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                        <InputLabel htmlFor="key" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter new tag key</InputLabel >
+                        <Input id="key" label="key" error={false} variant="outlined" value={newTagKey} onChange={(e) => {
+                            setNewTagKey(e.target.value);
+                        }} />
+                    </Box>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
+                        <InputLabel htmlFor="value" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter new tag value</InputLabel >
+                        <Input id="value" label="value" error={false} variant="outlined" value={newTagValue} onChange={(e) => {
+                            setNewTagValue(e.target.value);
+                        }} />
+                    </Box>
+                    <Button onClick={() => {
+                        if (newTagKey.length === 0 || newTagValue.length === 0) return;
+                        setTags((prevTags) => [...prevTags, { [newTagKey]: newTagValue }]);
+                        setNewTagKey("");
+                        setNewTagValue("");
+                    }}>add</Button>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
