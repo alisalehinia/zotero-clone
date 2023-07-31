@@ -21,7 +21,7 @@ export default function AddNewItemDialog({ text, collectionId, menuClose }) {
     const [primaryAttachment, setPrimaryAttachment] = React.useState(null); //? the attachment which's metadata will be used
     const [itemType, setItemType] = React.useState(undefined);
     const [metadata, setMetadata] = React.useState({});  //?object
-    const [tags, setTags] = React.useState([{ name: "1", color: "1" }]);       //? array of tag objects  { name: string, color: string } 
+    const [tags, setTags] = React.useState([{ name: null, color: null }]);       //? array of tag objects  { name: string, color: string } 
     const [related, setRelated] = React.useState([]);  //? array of items
 
     const dispatch = useDispatch();
@@ -49,8 +49,8 @@ export default function AddNewItemDialog({ text, collectionId, menuClose }) {
         setOpen(false);
     };
 
-    const [newTagKey, setNewTagKey] = React.useState("");
-    const [newTagValue, setNewTagValue] = React.useState("");
+    const [tagName, setTagName] = React.useState("");
+    const [tagColor, setTagColor] = React.useState("");
 
     return (
         <div>
@@ -67,22 +67,23 @@ export default function AddNewItemDialog({ text, collectionId, menuClose }) {
                         }} />
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
-                        <InputLabel htmlFor="key" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter new tag key</InputLabel >
-                        <Input id="key" label="key" error={false} variant="outlined" value={newTagKey} onChange={(e) => {
-                            setNewTagKey(e.target.value);
+                        <InputLabel htmlFor="tag-name" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter new tag-name</InputLabel >
+                        <Input id="tag-name" label="tag-name" error={false} variant="outlined" value={tagName} onChange={(e) => {
+                            setTagName(e.target.value);
                         }} />
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
-                        <InputLabel htmlFor="value" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter new tag value</InputLabel >
-                        <Input id="value" label="value" error={false} variant="outlined" value={newTagValue} onChange={(e) => {
-                            setNewTagValue(e.target.value);
+                        <InputLabel htmlFor="tag-color" sx={{ fontSize: "16px", marginBottom: "10px" }}>Enter new tag tag-color</InputLabel >
+                        <Input id="tag-color" label="tag-color" error={false} variant="outlined" value={tagColor} onChange={(e) => {
+                            setTagColor(e.target.value);
                         }} />
                     </Box>
                     <Button onClick={() => {
-                        if (newTagKey.length === 0 || newTagValue.length === 0) return;
-                        setTags((prevTags) => [...prevTags, { [newTagKey]: newTagValue }]);
-                        setNewTagKey("");
-                        setNewTagValue("");
+                        if (tagName.length === 0 || setTagColor.length === 0) return;
+                        setTags([{ name: tagName, color: tagColor }])
+                        setTagName("");
+                        setTagColor("");
+                        toast("tags added")
                     }}>add</Button>
                 </DialogContent>
                 <DialogActions>
