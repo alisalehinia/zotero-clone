@@ -70,14 +70,17 @@ export const AttachmentContainer = styled(Box)(({ theme }) => ({
     [theme.breakpoints.down("md")]: {
         width: "100%"
     },
-    padding: "5px",
+    padding: "8px",
     margin: "4px",
-    borderRadius: "5px",
+    marginBottom: "8px",
+    borderRadius: "10px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     cursor: "pointer",
-    border: `1px solid ${theme.palette.mode === "dark" ? Colors.primary : Colors.darkPrimary}`
+    border: `1px solid ${theme.palette.mode === "dark" ? Colors.primary : Colors.darkPrimary}`,
+
+
     // '&:hover': {
     //     backgroundColor: theme.palette.mode === 'dark' ? lighten(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary) :
     //         darken(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary)

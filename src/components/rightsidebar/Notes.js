@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import http from 'services/httpService';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Box, Typography } from '@mui/material';
 
 const Notes = ({ itemId = null, collectionId = null }) => {
 
@@ -10,12 +11,12 @@ const Notes = ({ itemId = null, collectionId = null }) => {
     const fetchItemNotes = async (itemId) => {
         const res = await http.get(`/items/${itemId}/notes`);
         setItemNotes(res.data.data);
-        console.log(res.data.data);
+
     }
     const fetchCollectionNotes = async (collectionId) => {
         const res = await http.get(`/collections/${collectionId}/notes`);
         setCollectionNotes(res.data.data);
-        console.log(res.data.data);
+
     }
     useEffect(() => {
         fetchItemNotes(itemId);
@@ -24,48 +25,63 @@ const Notes = ({ itemId = null, collectionId = null }) => {
 
     const deleteItemNoteHandler = (id) => {
         http.delete(`/notes/${id}`).then((res) => {
-            console.log(res);
+
         }).catch((err) => console.log(err))
     }
-    return (
-        <div className='border rounded flex m-1'>
-            <div className='border-r'>
+    const deleteCollectionNoteHandler = (id) => {
+        http.delete(`/collections/${id}`).then((res) => {
+
+        }).catch((err) => console.log(err))
+    }
+    return (<>
+
+        <Box sx={{ border: "1px solid", borderRadius: "10px", display: "flex", margin: "4px" }}>
+            <Box sx={{ borderRight: "1px solid" }}>
 
                 {
 
-                    itemNotes ? <div className='p-1 m-1'>  <h4>item notes</h4>{
+                    itemNotes ? <Box sx={{ padding: "4px", margin: "4px" }}>  <Typography sx={{ fontSize: "18px" }} variant="h5">item notes</Typography>{
 
                         itemNotes.map(note => (
-                            <div key={note._id} className=' p-1 m-1 border-b flex flex-col overflow-hidden '>
-                                <div className='flex items-center justify-between '>
-                                    <div className='w-24'>
+                            <Box key={note._id} sx={{ padding: "4px", margin: "4px", borderBottom: "1px solid", display: "flex", flexDirection: "column", overflow: "hidden" }}
+                            >
+                                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
+                                    <Box sx={{ width: "96px" }}>
                                         {note.text}
-                                    </div>
-                                    <div>
+                                    </Box>
+                                    <Box>
                                         <DeleteIcon onClick={() => deleteItemNoteHandler(note._id)} />
-                                    </div>
-                                </div>
-                            </div>
-                        ))}</div> : <div>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        ))}</Box> : <Box>
                         No notes found for this Item!
-                    </div>
+                    </Box>
                 }
-            </div>
-            <div className='border-r'>
+            </Box>
+            <Box sx={{ borderRight: "1px solid" }}>
                 {
-                    collectionNotes ? <div className='p-1 m-1'>
-                        <h4>collection notes</h4>
+                    collectionNotes ? <Box sx={{ padding: "4px", margin: "4px" }}>
+                        <Typography sx={{ fontSize: "18px" }} variant="h5">collection notes</Typography>
                         {collectionNotes.map(note => (
-                            <div key={note._id} className=' p-1 m-1 border-b flex flex-col '>
-                                {note.text}
-                            </div>
-                        ))} </div> : <div>
+                            <Box key={note._id} sx={{ padding: "4px", margin: "4px", borderBottom: "1px solid", display: "flex", flexDirection: "column", overflow: "hidden" }}
+                            >
+                                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
+                                    <Box sx={{ width: "96px" }}>
+                                        {note.text}
+                                    </Box>
+                                    <Box>
+                                        <DeleteIcon onClick={() => deleteCollectionNoteHandler(note._id)} />
+                                    </Box>
+                                </Box>
+                            </Box>
+                        ))}</Box> : <Box>
                         No notes found for this collection!
-                    </div>
+                    </Box>
                 }
-
-            </div>
-        </div>
+            </Box>
+        </Box >
+    </>
     )
 }
 

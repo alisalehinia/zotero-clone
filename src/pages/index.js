@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Button, CircularProgress } from "@mui/material"
+import { Box, Button, CircularProgress, Typography } from "@mui/material"
 import { HomeContainer, LeftSideBar, LeftSideBarTagContainer, MainContainer, MiddleContainer, RightSideBar, SideBar } from "styles/body";
 import http from "services/httpService";
 import { useRouter } from "next/router";
@@ -32,10 +32,6 @@ const Home = () => {
 
     const { selectedItem, selectedCollection } = useUIContext();
 
-    useEffect(() => {
-        // console.log(selectedCollection);
-        http.get("/tags").then((res) => console.log("tags", res)).catch((err) => console.log(err))
-    }, [])
     return (
         <HomeContainer>
             {/* //! left sidebar */}
@@ -57,7 +53,10 @@ const Home = () => {
             </MiddleContainer>
             {/* //! right sidebar */}
             <RightSideBar>
-                {(selectedItem || selectedCollection) && <Notes itemId={selectedItem} collectionId={selectedCollection} />}
+                <>
+                    <Typography variant="h4" sx={{ borderBottom: "1px solid", marginBottom: "10px", paddingBottom: "17px" }}>Notes</Typography>
+                    {(selectedItem || selectedCollection) && <Notes itemId={selectedItem} collectionId={selectedCollection} />}
+                </>
             </RightSideBar>
         </HomeContainer>
     );

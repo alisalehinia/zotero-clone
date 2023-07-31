@@ -1,5 +1,5 @@
 import { useAttachmentContext } from '@/context/AttachmentContext'
-import { Box, InputLabel, Select } from '@mui/material'
+import { Box, InputLabel, Select, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { AttachmentContainer } from 'styles/body'
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
@@ -31,9 +31,10 @@ const MiddleContainerComponent = () => {
         }
     };
     return (
-        <>
+        <Box sx={{ padding: "5px", }}>
+            <Typography variant="h4" sx={{ marginBottom: "10px", borderBottom: "1px solid " }}>Attachments</Typography>
             {
-                attachments.map((attachment, index) => {
+                attachments.length > 0 ? attachments.map((attachment, index) => {
                     // const isOdd = (index + 1) % 2 === 1;
                     // const backgroundColor = isOdd ? '#94a3b8' : '#64748b';
                     // sx={{ backgroundColor: backgroundColor }}
@@ -45,8 +46,9 @@ const MiddleContainerComponent = () => {
                         </Box>
                     </AttachmentContainer>
                 })
+                    : <Box sx={{ textAlign: "center" }}>No Item Selected</Box>
             }
-        </>
+        </Box>
     )
 }
 
@@ -97,11 +99,6 @@ export function AttachmentMenu({ attachmentId }) {
                     },
                 }}
             >
-                {/* {options.map((option) => (
-                    <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
-                        {option}
-                    </MenuItem>
-                ))} */}
                 <MenuItem>
                     <UpdateAttachmentDialog attachmentId={attachmentId} />
                 </MenuItem>
