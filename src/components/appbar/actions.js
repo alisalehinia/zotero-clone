@@ -115,7 +115,10 @@ export default function Actions({ matches }) {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <MenuItem onClick={handleClose}>
-                    <Avatar /> My account
+                    <Avatar />
+                    <Link href="/profile">
+                        My account
+                    </Link>
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={handleClose}>

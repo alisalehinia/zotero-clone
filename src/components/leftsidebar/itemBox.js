@@ -10,7 +10,6 @@ import http from 'services/httpService';
 import { useAttachmentContext } from '@/context/AttachmentContext';
 
 const ItemBox = ({ item, collectionId, deleteItem, fetchCollectionItems }) => {
-    console.log(open);
     const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
 
     //! menu data for item

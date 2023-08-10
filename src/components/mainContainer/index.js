@@ -30,8 +30,12 @@ const MiddleContainerComponent = () => {
             console.log('Error downloading the file:', error);
         }
     };
+
     return (
         <Box sx={{ padding: "5px", }}>
+            <Box sx={{ marginBottom: "10px" }}>
+                <AddNewAttachmentType />
+            </Box>
             <Typography variant="h4" sx={{ marginBottom: "10px", borderBottom: "1px solid " }}>Attachments</Typography>
             {
                 attachments.length > 0 ? attachments.map((attachment, index) => {
@@ -120,6 +124,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Input } from 'styles/input';
 import { toast } from 'react-hot-toast';
+import AddNewAttachmentType from '../formDialog/addNewAttachmentType';
 
 export function DeleteAttachmentDialog({ attachmentId }) {
     const [open, setOpen] = React.useState(false);

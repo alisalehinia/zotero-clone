@@ -5,7 +5,13 @@ import http from 'services/httpService';
 
 const TagBox = () => {
     const [tags, setTags] = useState([]);
+
     const { selectedTag, setSelectedTag } = useUIContext();
+    const { selectedItem, setSelectedItem,
+        selectedCollection, setSelectedCollection
+    } = useUIContext();
+
+
     const [filteredData, setFilteredData] = useState();
 
     // !----------dialog states
@@ -19,11 +25,29 @@ const TagBox = () => {
         setOpen(false);
     };
     // !----------
+
+    console.log(selectedCollection);
     useEffect(() => {
-        http.get("/tags").then((res) => {
-            setTags(res.data.data);
-        }).catch((err) => console.log(err))
-    }, [])
+        {
+            selectedItem ?   //! fetch all tags of users
+                http.get(`/tags/item/${selectedItem}`).then((res) => {
+                    setTags(res.data.data);
+                    console.log(" item tags", res);
+
+                }).catch((err) => console.log(err))
+                : selectedCollection ?
+                    http.get(`/tags/collection/${selectedCollection}`).then((res) => {
+                        setTags(res.data.data);
+                        console.log(" collection tags", res);
+
+                    }).catch((err) => console.log(err))
+                    : http.get(`/tags`).then((res) => { //! fetch tags that are in specific item
+                        setTags(res.data.data);
+                        console.log("tags", res);
+
+                    }).catch((err) => console.log(err))
+        }
+    }, [selectedItem, selectedCollection])
     const clickHandler = (tag) => {
         if (selectedTag?.name === tag.name && selectedTag?.color === tag.color) {
             setSelectedTag(null);
@@ -38,7 +62,19 @@ const TagBox = () => {
     }
     return (
         <>
-            <Typography varaint="h4" sx={{ margin: "10px" }} >All Tags</Typography>
+            <Typography varaint="h4" sx={{
+                margin: "10px",
+                cursor: "pointer",
+                backgroundColor: "#3b82f6",
+                padding: "5px 10px",
+                borderRadius: "10px",
+                color: "white"
+            }}
+                onClick={() => {
+                    setSelectedItem(null)
+                    setSelectedCollection(null)
+                }} >All Tags</Typography>
+
             <div className='flex flex-wrap gap-2 p-1 font-thin'>
                 {tags.map((tag) => (
                     <Box key={tag._id} sx={{
@@ -86,6 +122,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Colors } from 'styles/theme';
 
 export function FilteredItems({ filteredData, handleClickOpen, handleClose, open, setOpen }) {
     //   const [open, setOpen] = React.useState(false);

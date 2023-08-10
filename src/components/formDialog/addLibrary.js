@@ -34,6 +34,8 @@ export default function AddLibraryDialog({ text }) {
     const fetchUserGroups = () => {
         http.get("/groups").then((res) => {
             setAllUserGroups(res.data.data);
+            console.log(res.data.data);
+
         }).catch((err) => console.log(err))
     }
     const handleClickOpen = () => {

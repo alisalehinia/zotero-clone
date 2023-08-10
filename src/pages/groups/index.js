@@ -11,8 +11,9 @@ const GroupsPage = () => {
 
     useEffect(() => {
         http.get(`/groups`).then((res) => setUserGroups(res.data.data)).catch((err) => console.log(err))
-    }, [])
 
+    }, [])
+    console.log(userGroups);
     return (
         <div className='md:p-4'>
             <div className='flex items-center justify-between mb-4'>

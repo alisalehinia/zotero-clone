@@ -1,5 +1,6 @@
 import http from "services/httpService";
 import { itemActions } from "./item-slice";
+import { toast } from "react-hot-toast";
 
 
 export const fetchCollectionItems = (collectionId) => {
@@ -24,6 +25,8 @@ export const addNewItemAsync = (collectionId, itemData) => {
             const res = await http.post(`/collections/${collectionId}/items`, itemData); // Replace with your actual API endpoint and request data
 
             dispatch(itemActions.addNewItem({ collectionId, itemData: res.data.data }));
+            toast("new item added")
+            console.log(res.data.data);
         } catch (error) {
             console.log(error);
         }

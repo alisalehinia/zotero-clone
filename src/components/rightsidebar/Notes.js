@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import http from 'services/httpService';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Typography } from '@mui/material';
+import { toast } from 'react-hot-toast';
 
 const Notes = ({ itemId = null, collectionId = null }) => {
 
@@ -25,12 +26,14 @@ const Notes = ({ itemId = null, collectionId = null }) => {
 
     const deleteItemNoteHandler = (id) => {
         http.delete(`/notes/${id}`).then((res) => {
-
+            toast("item note delete")
+            fetchItemNotes(itemId)
         }).catch((err) => console.log(err))
     }
     const deleteCollectionNoteHandler = (id) => {
-        http.delete(`/collections/${id}`).then((res) => {
-
+        http.delete(`/notes/${id}`).then((res) => {
+            toast("collection note delete")
+            fetchCollectionNotes(collectionId)
         }).catch((err) => console.log(err))
     }
     return (<>

@@ -18,6 +18,8 @@ const UserAvatar = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+
     return (
         <IconButton
             onClick={handleClick}
