@@ -122,7 +122,10 @@ const TagBox = () => {
                             backgroundColor: 'white',
                             color: "#444"
                         },
-                    }} onClick={() => filterItemsByTag(tag)}>
+                    }} onClick={() => {
+
+                        filterItemsByTag(tag)
+                    }}>
                         <Box>
                             name: {tag._id}
                         </Box>

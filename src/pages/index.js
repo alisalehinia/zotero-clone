@@ -39,7 +39,7 @@ const Home = () => {
             <Box sx={{ width: "25vw" }}>
                 <LeftSideBar>
                     <AddLibraryDialog text="new library" />
-                    <LibraryTree />
+                    <LibraryTree groupLibs={null} />
                 </LeftSideBar>
                 <LeftSideBarTagContainer >
                     <TagBox />

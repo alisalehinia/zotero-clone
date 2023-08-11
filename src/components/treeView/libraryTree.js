@@ -15,8 +15,10 @@ import AddLibraryDialog from '../formDialog/addLibrary';
 import UpdateLibraryDialog from '../formDialog/updateLibrary';
 import AddNewCollectionDialog from '../formDialog/addCollection';
 import { useUIContext } from '@/context/ui';
+import { libraryActions } from 'store/library/library-slice';
 
-const LibraryTree = () => {
+
+const LibraryTree = ({ groupLibs }) => {
 
     // ! delete dialog state
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -47,8 +49,9 @@ const LibraryTree = () => {
     const { setSelectedLibrary } = useUIContext();
 
     useEffect(() => {
-        dispatch(fetchUserLibraries());
-    }, [dispatch]);
+        !groupLibs ? dispatch(fetchUserLibraries()) :
+            dispatch(libraryActions.fetchUserLibrariesSuccess(groupLibs))
+    }, [dispatch, groupLibs]);
 
     if (loading) {
         return <CircularProgress />
