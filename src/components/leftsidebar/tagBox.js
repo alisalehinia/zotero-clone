@@ -3,16 +3,23 @@ import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import http from 'services/httpService';
 
+
+
 const TagBox = () => {
     const [tags, setTags] = useState([]);
 
+    const dispatch = useDispatch();
+
     const { selectedTag, setSelectedTag } = useUIContext();
     const { selectedItem, setSelectedItem,
-        selectedCollection, setSelectedCollection
+        selectedCollection, setSelectedCollection,
+        selectedLibrary, setSelectedLibrary
     } = useUIContext();
 
 
-    const [filteredData, setFilteredData] = useState();
+    const [filteredItems, setFilteredItems] = useState();
+    const [filteredCollections, setFilteredCollections] = useState();
+    const [filteredLibraries, setFilteredLibraries] = useState();
 
     // !----------dialog states
     const [open, setOpen] = React.useState(false);
@@ -26,7 +33,6 @@ const TagBox = () => {
     };
     // !----------
 
-    console.log(selectedCollection);
     useEffect(() => {
         {
             selectedItem ?   //! fetch all tags of users
@@ -36,33 +42,52 @@ const TagBox = () => {
 
                 }).catch((err) => console.log(err))
                 : selectedCollection ?
-                    http.get(`/tags/collection/${selectedCollection}`).then((res) => {
+                    http.get(`/tags/collection/${selectedCollection}`).then((res) => {  //! fetch tags that are in specific collection
                         setTags(res.data.data);
                         console.log(" collection tags", res);
 
                     }).catch((err) => console.log(err))
-                    : http.get(`/tags`).then((res) => { //! fetch tags that are in specific item
-                        setTags(res.data.data);
-                        console.log("tags", res);
+                    : selectedLibrary ?
+                        http.get(`/tags/library/${selectedLibrary}`).then((res) => { //! fetch tags that are in specific library
+                            setTags(res.data.data);
+                            console.log(" collection tags", res);
 
-                    }).catch((err) => console.log(err))
+                        }).catch((err) => console.log(err))
+                        : http.get(`/tags`).then((res) => { //! fetch tags that are in specific item
+                            setTags(res.data.data);
+                            console.log("tags", res);
+
+                        }).catch((err) => console.log(err))
         }
-    }, [selectedItem, selectedCollection])
-    const clickHandler = (tag) => {
+    }, [selectedItem, selectedCollection, selectedLibrary])
+    const filterItemsByTag = (tag) => {
         if (selectedTag?.name === tag.name && selectedTag?.color === tag.color) {
             setSelectedTag(null);
             return;
         }
 
         setSelectedTag(tag);
-        http.get(`/items/tag/${tag._id}`).then((res) => {
-            setFilteredData(res.data.data);
+
+        http.get(`/tags/items?${tag._id}`).then((res) => {
+            console.log(res);
+            setFilteredItems(res.data.data);
         }).catch((err) => console.log(err))
-        handleClickOpen()
+        http.get(`/tags/collections?${tag._id}`).then((res) => {
+            console.log(res);
+            setFilteredCollections(res.data.data);
+        }).catch((err) => console.log(err))
+        http.get(`/tags/libraries?${tag._id}`).then((res) => {
+            console.log(res);
+            setFilteredLibraries(res.data.data);
+        }).catch((err) => console.log(err))
+        // handleClickOpen()
+        console.log("item=>", filteredItems, "collection=>", filteredCollections, "library=>", filteredLibraries);
+        dispatch(libraryActions.fetchUserLibrariesSuccess(filteredLibraries));
+
     }
     return (
         <>
-            <Typography varaint="h4" sx={{
+            <Button variant="outlined" sx={{
                 margin: "10px",
                 cursor: "pointer",
                 backgroundColor: "#3b82f6",
@@ -73,7 +98,13 @@ const TagBox = () => {
                 onClick={() => {
                     setSelectedItem(null)
                     setSelectedCollection(null)
-                }} >All Tags</Typography>
+                    setSelectedLibrary(null)
+                }} >All Tags</Button>
+            <Button onClick={() => {
+                dispatch(fetchUserLibraries());
+            }}
+                sx={{ color: Colors.danger }}
+            >disable filter</Button>
 
             <div className='flex flex-wrap gap-2 p-1 font-thin'>
                 {tags.map((tag) => (
@@ -91,9 +122,9 @@ const TagBox = () => {
                             backgroundColor: 'white',
                             color: "#444"
                         },
-                    }} onClick={() => clickHandler(tag)}>
+                    }} onClick={() => filterItemsByTag(tag)}>
                         <Box>
-                            name: {tag.name}
+                            name: {tag._id}
                         </Box>
                         <Box
                             sx={{
@@ -107,7 +138,7 @@ const TagBox = () => {
                         </Box>
                     </Box>
                 ))}
-                <FilteredItems filteredData={filteredData}
+                <FilteredItems filteredData={filteredItems}
                     handleClickOpen={handleClickOpen} handleClose={handleClose} open={open} setOpen={setOpen} />
             </div>
         </>
@@ -123,6 +154,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Colors } from 'styles/theme';
+import { useDispatch } from 'react-redux';
+import { libraryActions } from 'store/library/library-slice';
+import { fetchUserLibraries } from 'store/library/library-actions';
 
 export function FilteredItems({ filteredData, handleClickOpen, handleClose, open, setOpen }) {
     //   const [open, setOpen] = React.useState(false);

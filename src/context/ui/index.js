@@ -11,13 +11,15 @@ export const UIProvider = ({ children }) => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [selectedCollection, setSelectedCollection] = useState(null)
     const [selectedTag, setSelectedTag] = useState(null);
+    const [selectedLibrary, setSelectedLibrary] = useState(null)
 
     const value = {
         drawerOpen, setDrawerOpen,
         showSearchBox, setShowSearchBox,
         selectedItem, setSelectedItem,
         selectedCollection, setSelectedCollection,
-        selectedTag, setSelectedTag
+        selectedTag, setSelectedTag,
+        selectedLibrary, setSelectedLibrary
     }
 
     return <UIContext.Provider value={value}>

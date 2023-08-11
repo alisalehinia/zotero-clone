@@ -24,6 +24,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
+import { useUIContext } from '@/context/ui';
 
 export default function LibraryAccordion({ primaryText, secondaryText, content, libraryId, fetchLibraries }) {
   const [expanded, setExpanded] = React.useState(false);
@@ -40,6 +41,8 @@ export default function LibraryAccordion({ primaryText, secondaryText, content, 
   };
 
   const { collections, setCollections } = useCollectionContext();
+
+
 
 
   const handleChange = (panel) => (event, isExpanded) => {

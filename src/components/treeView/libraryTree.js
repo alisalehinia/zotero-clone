@@ -14,6 +14,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddLibraryDialog from '../formDialog/addLibrary';
 import UpdateLibraryDialog from '../formDialog/updateLibrary';
 import AddNewCollectionDialog from '../formDialog/addCollection';
+import { useUIContext } from '@/context/ui';
 
 const LibraryTree = () => {
 
@@ -43,6 +44,7 @@ const LibraryTree = () => {
     const loading = useSelector((state) => state.library.loading);
     const error = useSelector((state) => state.library.error);
 
+    const { setSelectedLibrary } = useUIContext();
 
     useEffect(() => {
         dispatch(fetchUserLibraries());
@@ -66,9 +68,9 @@ const LibraryTree = () => {
         <>
             <Box>
                 {loading && <CircularProgress />}
-                {libraries.map((library) => {
+                {libraries ? libraries.map((library) => {
                     return (
-                        <div key={library._id} className='w-full flex items-start justify-start'>
+                        <div key={library._id} className='w-full flex items-start justify-start' onClick={() => { setSelectedLibrary(library._id) }}>
                             <div className='flex-grow mt-2'>
                                 <TreeView key={library._id}
                                     defaultCollapseIcon={<ExpandMoreIcon />}
@@ -164,7 +166,7 @@ const LibraryTree = () => {
                         </div>
 
                     )
-                })}
+                }) : <CircularProgress />}
             </Box>
 
         </>
