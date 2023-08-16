@@ -1,4 +1,4 @@
-import { Box, Checkbox, InputLabel, Typography } from '@mui/material';
+import { Box, Checkbox, InputLabel, Typography, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import http from 'services/httpService'
 
@@ -8,7 +8,14 @@ import LibraryTree from '@/components/treeView/libraryTree';
 import { boolean } from 'yup';
 import Image from 'next/image';
 
+const GroupPageBox = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#0f172a' : '#f1f5f9',
+    width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr"
+}))
+
 const GroupsPage = () => {
+
+
 
     const [userGroups, setUserGroups] = useState([]);
 
@@ -25,10 +32,10 @@ const GroupsPage = () => {
 
     }, [selectedGroup])
     console.log(userGroups);
-    return (<Box sx={{ width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        <Box sx={{ backgroundColor: "#0f172a", height: "90vh", padding: "8px" }}>
+    return (<GroupPageBox>
+        <Box sx={{ borderRight: "1px solid", padding: "8px 16px" }}>
             <Box
-                sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+                sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", backgroundColor: "inherit", }}>
                 <Typography sx={{ padding: "8px" }} >My Groups</Typography >
                 <CreateGroupDialog />
             </Box>
@@ -44,7 +51,7 @@ const GroupsPage = () => {
                             justifyContent: "space-between",
                             border: "1px solid #ccc",
                             marginBottom: "8px",
-                            backgroundColor: "#1e293b",
+                            backgroundColor: "inherit",
                             cursor: "pointer"
                         }}
                             onClick={() => {
@@ -69,7 +76,7 @@ const GroupsPage = () => {
                 }
             </Box>
         </Box>
-        <Box sx={{ backgroundColor: "#0f172a", height: "90vh", padding: "8px" }}>
+        <Box sx={{ backgroundColor: "inherit", height: "90vh", padding: "8px" }}>
             <Box sx={{ fontWeight: "500", padding: "8px 12px", backgroundColor: "#1e40af", color: "white", borderRadius: "20px" }}>group name: {selectedGroup ? selectedGroup.name : "no selected group"}</Box>
             {selectedGroup && <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                 <UpdateGroupDialog groupId={selectedGroup._id} />
@@ -102,7 +109,7 @@ const GroupsPage = () => {
                 )) : <Box sx={{ textAlign: "center" }}>no libraries in group</Box>
             }
         </Box>
-    </Box>
+    </GroupPageBox>
     )
 }
 
@@ -277,12 +284,12 @@ export function DeleteGroupDialog({ groupId }) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleClose}>cancel</Button>
                     <Button onClick={() => {
                         handleClose()
                         handleDelete()
                     }} autoFocus>
-                        Agree
+                        delete
                     </Button>
                 </DialogActions>
             </Dialog>
