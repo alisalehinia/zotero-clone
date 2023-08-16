@@ -23,6 +23,9 @@ export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
                 <Link href="/">
                     <ListItemText primary="Home" sx={{ cursor: "pointer" }} />
                 </Link>
+                <Link href="/app">
+                    <ListItemText primary="App" sx={{ cursor: "pointer" }} />
+                </Link>
                 {!user && <> <Link href="/login">
                     <ListItemText sx={{ cursor: "pointer" }} primary="Login" />
                 </Link>
@@ -32,11 +35,6 @@ export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
                 <Link href="/groups">
                     <ListItemText sx={{ cursor: "pointer" }} primary="Groups" />
                 </Link>
-                <ListItemButton>
-                    <ListItemIcon>
-                        <SearchRounded onClick={() => setShowSearchBox(true)} />
-                    </ListItemIcon>
-                </ListItemButton>
             </MyList>
             <DarkModeSwitch checked={darkMode} sx={{ m: 1 }} onChange={toggleTheme} value={darkMode} />
             <Actions matches={matches} />
