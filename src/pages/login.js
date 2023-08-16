@@ -59,26 +59,26 @@ const RegisterForm = () => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
                 {/* <Title variant="h4">Login page</Title> */}
                 <Title variant="h4">{translate('login-title')}</Title>
-                <InputLabel htmlFor="email" sx={{ fontSize: "16px", margin: "5px" }}>Enter your email</InputLabel >
-                <Input id="email" label="email" error={false} variant="outlined" value={email} onChange={(e) => {
+                <InputLabel htmlFor="email" sx={{ fontSize: "16px", margin: "5px" }}>{translate('email-label')}</InputLabel >
+                <Input id="email" label={translate('email')} error={false} variant="outlined" value={email} onChange={(e) => {
                     setEmail(e.target.value);
                     formIsValid
                 }} />
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "4px", marginBottom: "20px" }}>
-                <InputLabel htmlFor="password" sx={{ fontSize: "16px", margin: "5px" }}>Enter your password</InputLabel >
-                <Input label="password" id="password" type="password" error={false} variant="outlined" value={password} onChange={(e) => {
+                <InputLabel htmlFor="password" sx={{ fontSize: "16px", margin: "5px" }}>{translate('password-label')}</InputLabel >
+                <Input label={translate('password')} id="password" type="password" error={false} variant="outlined" value={password} onChange={(e) => {
                     setPassword(e.target.value);
                     formIsValid
                 }} />
             </Box>
-            <MyButton disabled={!formIsValid} onClick={handleSubmit} variant="contained">Login</MyButton>
+            <MyButton disabled={!formIsValid} onClick={handleSubmit} variant="contained">{translate('login-button')}</MyButton>
             <Box sx={{ display: "flex", alignItems: "flex-end", gap: "4px" }}>
                 <Typography variant="caption">
-                    {" Don't Have Account?"}
+                    {translate('have-account')}
                 </Typography>
                 <Link href="/signup" className="text-blue-500">
-                    Signup
+                    {translate('sign-up')}
                 </Link>
             </Box>
         </FormContainer>

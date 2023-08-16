@@ -5,12 +5,14 @@ import http from 'services/httpService'
 import GroupIcon from '@mui/icons-material/Group';
 import CreateGroupDialog from '@/components/formDialog/createGroup';
 import LibraryTree from '@/components/treeView/libraryTree';
-import { boolean } from 'yup';
-import Image from 'next/image';
+
 
 const GroupPageBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#0f172a' : '#f1f5f9',
-    width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr"
+    width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr",
+    [theme.breakpoints.down("md")]: {
+        gridTemplateColumns: "1fr",
+    }
 }))
 
 const GroupsPage = () => {

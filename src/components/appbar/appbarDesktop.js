@@ -8,16 +8,19 @@ import Button from '@mui/material/Button';
 import { useAuth } from "@/context/AuthContext";
 
 
+
 export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
 
     const { setShowSearchBox } = useUIContext();
 
     const { user } = useAuth();
 
+
+
     return (
         <AppbarContainer>
             <AppbarHeader>
-                zotero
+                Zotero
             </AppbarHeader>
             <MyList type="row">
                 <Link href="/">
@@ -41,3 +44,4 @@ export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
         </AppbarContainer>
     )
 }
+
