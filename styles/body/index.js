@@ -5,7 +5,7 @@ import { darken, lighten } from "polished";
 
 export const MainContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#8796A5' : '#aab4be',
-    maxWidth: "xl"
+    maxWidth: "xl",
 }))
 export const LeftSideBar = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
@@ -33,6 +33,7 @@ export const RightSideBar = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
     width: "25%",
     display: "none",
+    borderLeft: "1px solid #fff",
     [theme.breakpoints.up("md")]: {
         width: "25%",
         display: "block"
