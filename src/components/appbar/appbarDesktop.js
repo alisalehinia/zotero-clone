@@ -9,7 +9,9 @@ import { useAuth } from "@/context/AuthContext";
 
 
 
+
 export default function AppbarDesktop({ matches, darkMode, toggleTheme }) {
+
 
     const { setShowSearchBox } = useUIContext();
 

@@ -8,6 +8,12 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import TagIcon from '@mui/icons-material/Tag';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
+import { useRouter } from 'next/router';
+
+import { useTranslation } from "next-i18next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+
+
 const HomeContainer = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#0f172a' : '#f1f5f9',
 }))
@@ -33,7 +39,12 @@ const CTAButton = styled(Button)(({ theme }) => ({
     backgroundColor: "#0f172a"
 }))
 
+
 const Home = () => {
+
+    const { locale } = useRouter()
+    const { t: translate } = useTranslation('common')
+
     return (
         <HomeContainer>
             <Hero>
@@ -45,7 +56,7 @@ const Home = () => {
                     }}> Your personal
                         research assistant</Typography>
                     <Link href="/app">
-                        <CTAButton variant='contained'>Try Now !</CTAButton>
+                        <CTAButton variant='contained'>{translate('CTA')}</CTAButton>
                     </Link>
                 </HeaderBox>
             </Hero>
@@ -56,7 +67,7 @@ const Home = () => {
                     padding: "12px",
                     marginBottom: "40px"
                 }}
-                    textAlign={"center"}>Zotero is an open source platform that helps researchers manage their references well.</Typography>
+                    textAlign={"center"}>{translate('header')}</Typography>
 
                 <Box sx={{
                     margin: "0 auto", width: "95%", display: "flex", flexWrap: "wrap", gapX: "10px", gapY: "20px",
@@ -64,30 +75,30 @@ const Home = () => {
                 }}>
                     <Box sx={{ width: "300px", textAlign: "center", marginBottom: "20px" }}>
                         <GroupsIcon sx={{ fontSize: "200px", marginBottom: "10px" }} />
-                        <Typography sx={{ marginBottom: "20px" }} variant="h4">Collaborate freely</Typography>
+                        <Typography sx={{ marginBottom: "20px" }} variant="h4">{translate('group')}</Typography>
                         <Typography variant='p'>
-                            Zotero lets you co-write a paper with a colleague, distribute course materials to students, or build a collaborative bibliography. You can share a Zotero library with as many people you like, at no cost.
+                            {translate('group_t')}
                         </Typography>
                     </Box>
                     <Box sx={{ width: "300px", textAlign: "center", marginBottom: "20px" }}>
                         <PhoneAndroidIcon sx={{ fontSize: "200px", marginBottom: "10px" }} />
-                        <Typography sx={{ marginBottom: "20px" }} variant="h4">every where access</Typography>
+                        <Typography sx={{ marginBottom: "20px" }} variant="h4">{translate('mobile')}</Typography>
                         <Typography variant='p'>
-                            by accessing to fully responsive web app and of course the android application you can access your files every where.
+                            {translate('mobile_t')}
                         </Typography>
                     </Box>
                     <Box sx={{ width: "300px", textAlign: "center", marginBottom: "20px" }}>
                         <TagIcon sx={{ fontSize: "200px", marginBottom: "10px" }} />
-                        <Typography sx={{ marginBottom: "20px" }} variant="h4">Organize your way</Typography>
+                        <Typography sx={{ marginBottom: "20px" }} variant="h4">{translate('tag')}</Typography>
                         <Typography variant='p'>
-                            Zotero helps you organize your research any way you want. You can sort items into collections and tag them with keywords. Or create saved searches that automatically fill with relevant materials as you work.
+                            {translate('tag_t')}
                         </Typography>
                     </Box>
                     <Box sx={{ width: "300px", textAlign: "center", marginBottom: "20px" }}>
                         <GitHubIcon sx={{ fontSize: "200px", marginBottom: "10px" }} />
-                        <Typography sx={{ marginBottom: "20px" }} variant="h4">Rest easy</Typography>
+                        <Typography sx={{ marginBottom: "20px" }} variant="h4">{translate('opensource')}</Typography>
                         <Typography variant='p'>
-                            Zotero is open source and developed by an independent, nonprofit organization that has no financial interest in your private information. With Zotero, you always stay in control of your own data.
+                            {translate('opensource_t')}
                         </Typography>
                     </Box>
                 </Box>
@@ -96,10 +107,16 @@ const Home = () => {
             <Box sx={{ width: "100%", borderTop: "1px solid" }}>
                 <Box sx={{ display: "flex" }}>
                     <Box sx={{ margin: "0 auto", display: "flex", flexWrap: "wrap", gap: "20px", padding: "8px 16px", fontSize: "17px", flexGrow: "1" }} >
-                        <Box>github repo</Box>
-                        <Box>privacy</Box>
-                        <Box>Terms of Service</Box>
-                        <Box>developers</Box>
+                        <Box>
+                            <Link href="/gitRepos">
+                                github repo
+                            </Link>
+                        </Box>
+                        <Box>
+                            <Link href="/privacy">
+                                privacy
+                            </Link>
+                        </Box>
                     </Box>
                     <Box sx={{ fontSize: "20px", padding: "8px 16px" }}>download mobile application</Box>
                 </Box>
@@ -109,3 +126,12 @@ const Home = () => {
     )
 }
 export default Home
+
+export async function getStaticProps({ locale }) {
+
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ['common']))
+        }
+    }
+}

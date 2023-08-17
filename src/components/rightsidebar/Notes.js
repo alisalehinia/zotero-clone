@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import http from 'services/httpService';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Typography } from '@mui/material';
+import { Box, Tooltip, Typography } from '@mui/material';
 import { toast } from 'react-hot-toast';
 
 const Notes = ({ itemId = null, collectionId = null }) => {
@@ -46,12 +46,19 @@ const Notes = ({ itemId = null, collectionId = null }) => {
                     itemNotes ? <Box sx={{ padding: "4px", margin: "4px" }}>  <Typography sx={{ fontSize: "18px" }} variant="h5">item notes</Typography>{
 
                         itemNotes.map(note => (
-                            <Box key={note._id} sx={{ padding: "4px", margin: "4px", borderBottom: "1px solid", display: "flex", flexDirection: "column", overflow: "hidden" }}
+                            <Box key={note._id} sx={{
+                                padding: "4px", margin: "4px", display: "flex", flexDirection: "column", overflow: "hidden",
+                                "&:not(:last-child)": {
+                                    borderBottom: "1px solid", // Define the style for non-last elements
+                                },
+                            }}
                             >
                                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
-                                    <Box sx={{ width: "96px" }}>
-                                        {note.text}
-                                    </Box>
+                                    <Tooltip title={note.text} placement="top-start">
+                                        <Box sx={{ width: "96px" }}>
+                                            {note.text}
+                                        </Box>
+                                    </Tooltip>
                                     <Box>
                                         <DeleteIcon onClick={() => deleteItemNoteHandler(note._id)} />
                                     </Box>
@@ -67,12 +74,20 @@ const Notes = ({ itemId = null, collectionId = null }) => {
                     collectionNotes ? <Box sx={{ padding: "4px", margin: "4px" }}>
                         <Typography sx={{ fontSize: "18px" }} variant="h5">collection notes</Typography>
                         {collectionNotes.map(note => (
-                            <Box key={note._id} sx={{ padding: "4px", margin: "4px", borderBottom: "1px solid", display: "flex", flexDirection: "column", overflow: "hidden" }}
+                            <Box key={note._id} sx={{
+                                padding: "4px", margin: "4px", display: "flex", flexDirection: "column", overflow: "hidden",
+
+                                "&:not(:last-child)": {
+                                    borderBottom: "1px solid", // Define the style for non-last elements
+                                },
+                            }}
                             >
                                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }} >
-                                    <Box sx={{ width: "96px" }}>
-                                        {note.text}
-                                    </Box>
+                                    <Tooltip title={note.text} placement="top-start">
+                                        <Box sx={{ width: "96px" }}>
+                                            {note.text}
+                                        </Box>
+                                    </Tooltip>
                                     <Box>
                                         <DeleteIcon onClick={() => deleteCollectionNoteHandler(note._id)} />
                                     </Box>

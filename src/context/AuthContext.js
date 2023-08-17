@@ -29,7 +29,7 @@ const asyncActionHandlers = {
                 Router.push("/")
             }).catch((err) => {
                 dispatch({ type: "SIGNIN_REJECT", error: err?.response?.data?.message })
-                toast.error(err?.response?.data?.message)
+                // toast.error(err?.response?.data?.message)
             })
         },
     SIGNUP: ({ dispatch }) =>
@@ -42,7 +42,7 @@ const asyncActionHandlers = {
                 Router.push("/")
             }).catch((err) => {
                 dispatch({ type: "SIGNIN_REJECT", error: err?.response?.data?.message })
-                toast.error(err?.response?.data?.message)
+                // toast.error(err?.response?.data?.message)
             })
         },
     LOAD_USER: ({ dispatch }) =>
