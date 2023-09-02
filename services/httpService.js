@@ -9,9 +9,6 @@ const app = axios.create({
 axios.interceptors.request.use(
     (config) => {
         config.withCredentials = true;
-        // config.headers = {
-        //     'Content-Type': 'multipart/form-data; application/json; charset=utf-8'
-        // };
         return config
     },
     (error) => {

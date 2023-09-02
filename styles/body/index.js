@@ -66,8 +66,6 @@ export const ItemContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const AttachmentContainer = styled(Box)(({ theme }) => ({
-    // backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,
-
     [theme.breakpoints.down("md")]: {
         width: "100%"
     },
@@ -80,12 +78,6 @@ export const AttachmentContainer = styled(Box)(({ theme }) => ({
     alignItems: "center",
     cursor: "pointer",
     border: `1px solid ${theme.palette.mode === "dark" ? Colors.primary : Colors.darkPrimary}`,
-
-
-    // '&:hover': {
-    //     backgroundColor: theme.palette.mode === 'dark' ? lighten(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary) :
-    //         darken(0.3, theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary)
-    // },
 }));
 export const MiddleContainer = styled(Box)(({ theme }) => ({
     // backgroundColor: theme.palette.mode === 'dark' ? Colors.darkPrimary : Colors.primary,

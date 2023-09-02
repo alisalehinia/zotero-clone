@@ -6,7 +6,6 @@ import { appWithTranslation } from "next-i18next";
 import Appbar from "@/components/appbar";
 import { UIProvider } from "@/context/ui"
 import AppDrawer from "@/components/drawer";
-import SearchBox from "@/components/search";
 import "../../styles/globals.css"
 import { LibraryProvider } from "@/context/LibraryContext";
 import { CollectionProvider } from "@/context/CollectionContext";
@@ -152,7 +151,6 @@ function MyApp({ Component, pageProps }) {
                     <Appbar darkMode={darkMode} toggleTheme={toggleTheme} />
                     <Component {...pageProps} />
                     <AppDrawer darkMode={darkMode} toggleTheme={toggleTheme} />
-                    <SearchBox />
                     <Toaster />
                   </UIProvider>
                 </MainContainer>
